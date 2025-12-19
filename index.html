@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prumysl - Industrial Solar Solutions</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & GLOBAL --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        a { text-decoration: none; }
+
+        /* --- HEADER --- */
+        .floating-header {
+            position: fixed;
+            top: 20px; left: 20px; right: 20px;
+            height: 70px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .logo {
+            font-size: 24px; font-weight: 900; color: #222;
+            letter-spacing: 1px; text-transform: uppercase;
+            position: absolute; left: 50%; transform: translateX(-50%);
+        }
+        .nav-group { display: flex; gap: 25px; align-items: center; }
+        .nav-link { color: #444; font-size: 15px; font-weight: 700; transition: color 0.3s ease; white-space: nowrap; }
+        .nav-link:hover { color: #e6b800; }
+        .mobile-toggle { display: none; cursor: pointer; font-size: 24px; color: #333; }
+
+        /* --- MOBILE MENU --- */
+        .mobile-menu-container {
+            display: none; position: fixed; top: 100px; left: 20px; right: 20px;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px);
+            border-radius: 5px; padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            flex-direction: column; gap: 15px; text-align: center; z-index: 999;
+        }
+        .mobile-menu-container.active { display: flex; animation: slideIn 0.3s ease-out; }
+        .mobile-link { color: #333; font-size: 18px; font-weight: 700; padding: 10px; border-bottom: 1px solid #eee; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HERO --- */
+        .hero {
+            position: relative; width: 100%; height: 100vh;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: url('img/hero.jpg'); background-color: #222;
+            background-size: cover; background-position: center;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; color: white; padding: 20px; max-width: 800px; margin-top: 60px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 15px; line-height: 1.2; }
+        .hero p { font-size: 1.25rem; margin-bottom: 30px; opacity: 0.9; }
+        .hero-btn {
+            display: inline-block; padding: 15px 35px;
+            background-color: #e6b800; color: #111; font-weight: 700;
+            border-radius: 5px; transition: transform 0.2s, background 0.2s;
+        }
+        .hero-btn:hover { background-color: #ffcc00; transform: translateY(-2px); }
+
+        /* --- PRODUCTS --- */
+        .products-section { padding: 80px 20px; background-color: #f9f9f9; text-align: center; }
+        .section-title { font-size: 2.5rem; font-weight: 900; color: #333; margin-bottom: 50px; position: relative; display: inline-block; }
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 4px;
+            background: #e6b800; margin: 10px auto 0; border-radius: 2px;
+        }
+        .product-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .product-card {
+            background: white; border-radius: 10px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; text-align: right;
+        }
+        .product-card:hover { transform: translateY(-5px); border-color: #e6b800; }
+        
+        .card-img-container { 
+            position: relative; 
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #eee; 
+            overflow: hidden; 
+            padding: 10px;
+        }
+        
+        .card-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; /* UPDATED: Changed from cover to contain for full visibility */
+        }
+
+        .badge {
+            position: absolute; top: 10px; right: 10px;
+            background: #e6b800; color: #000; font-weight: 700;
+            padding: 4px 10px; border-radius: 4px; font-size: 12px;
+        }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; color: #222; }
+        .product-desc {
+            font-size: 0.9rem; color: #666; margin-bottom: 15px; line-height: 1.5;
+            flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .product-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 10px; padding-top: 15px; border-top: 1px solid #f0f0f0;
+        }
+        .price { font-size: 1.3rem; font-weight: 900; color: #333; }
+        .buy-btn {
+            background: #222; color: white; padding: 8px 18px;
+            border-radius: 5px; font-size: 14px; transition: background 0.3s;
+        }
+        .buy-btn:hover { background: #e6b800; color: #000; }
+
+        /* --- BATTERIES --- */
+        .battery-section { background-color: #fff; padding: 80px 20px; border-top: 1px solid #eee; }
+        .battery-container { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 50px; }
+        .battery-img-box { flex: 1; }
+        .battery-img { width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .battery-content { flex: 1; text-align: right; }
+        .promo-tag { background: #e6b800; color: #000; font-weight: 700; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 15px; display: inline-block; }
+        .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .offer-card { border: 2px solid #eee; border-radius: 8px; padding: 15px; text-align: center; }
+        .offer-card.featured { border-color: #e6b800; background: #fffdf2; }
+        .offer-price { font-size: 1.5rem; font-weight: 900; color: #333; }
+        .redirect-btn { display: inline-block; background: #222; color: #fff; padding: 15px 40px; font-weight: 700; border-radius: 5px; width: 100%; text-align: center; transition: 0.3s; }
+        .redirect-btn:hover { background: #e6b800; color: #000; }
+
+        /* --- QUALITY --- */
+        .quality-section { background-color: #1a1a1a; color: #fff; padding: 80px 20px; position: relative; }
+        .quality-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #e6b800, #333, #e6b800); }
+        .quality-header { text-align: center; max-width: 800px; margin: 0 auto 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feature-box { background: rgba(255, 255, 255, 0.05); padding: 30px 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; transition: 0.3s; }
+        .feature-box:hover { transform: translateY(-10px); border-color: #e6b800; }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; color: #e6b800; }
+
+        /* --- REVIEWS (Polished) --- */
+        .reviews-section { padding: 80px 20px; background-color: #f9f9f9; overflow: hidden; }
+        .reviews-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+        .review-card {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04);
+            transition: transform 0.3s ease; display: flex; flex-direction: column;
+            min-width: 280px;
+        }
+        .review-card:hover { transform: translateY(-5px); border-color: #e6b800; }
+        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .review-avatar { 
+            width: 45px; height: 45px; border-radius: 50%; object-fit: cover; 
+            border: 2px solid #eee; background-color: #ddd;
+        }
+        .reviewer-info h4 { font-size: 0.95rem; margin-bottom: 2px; color: #222; }
+        .reviewer-info span { font-size: 0.8rem; color: #888; }
+        .verified-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 0.75rem; color: #28a745; font-weight: 700;
+            margin-bottom: 10px; background: #e9f7ef;
+            padding: 3px 8px; border-radius: 4px; align-self: flex-start;
+        }
+        .review-stars { color: #ffc107; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .review-text { font-size: 0.9rem; line-height: 1.6; color: #555; font-style: italic; }
+
+        /* --- FAQ (Polished) --- */
+        .faq-section { padding: 80px 20px; background-color: #fff; }
+        .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .faq-item { border: 1px solid #eee; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.active { background-color: #fffdf2; border-color: #e6b800; box-shadow: 0 4px 15px rgba(230, 184, 0, 0.1); }
+        .faq-question {
+            width: 100%; padding: 20px; text-align: right; background: none; border: none;
+            font-family: inherit; font-size: 1.05rem; font-weight: 700; color: #333;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;
+        }
+        .faq-question .toggle-icon { font-size: 1.5rem; color: #e6b800; transition: transform 0.3s ease; line-height: 1; }
+        .faq-item.active .toggle-icon { transform: rotate(45deg); }
+        .faq-item.active .faq-question { color: #000; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; color: #666; line-height: 1.7; font-size: 0.95rem; }
+        .faq-item.active .faq-answer { padding-bottom: 20px; max-height: 200px; }
+
+        /* --- FOOTER --- */
+        .site-footer { background-color: #222; color: #aaa; padding: 60px 20px 20px; text-align: right; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .footer-col h3 { color: #e6b800; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; } .footer-col a:hover { color: #e6b800; }
+        .footer-bottom { border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; text-align: center; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .nav-group { display: none; }
+            .mobile-toggle { display: block; position: absolute; right: 30px; }
+            .logo { position: absolute; left: 50%; transform: translateX(-50%); }
+            .hero h1 { font-size: 2.2rem; }
+            .product-grid, .battery-container, .features-grid, .footer-container { grid-template-columns: 1fr; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } 
+            .battery-container { flex-direction: column; text-align: center; }
+            .battery-content { text-align: center; }
+            .reviews-wrapper {
+                display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px;
+                padding: 10px 5px 30px 5px; -webkit-overflow-scrolling: touch;
+            }
+            .reviews-wrapper::-webkit-scrollbar { display: none; }
+            .review-card { scroll-snap-align: start; flex: 0 0 85%; }
+        }
+        @media (max-width: 500px) { .product-grid { grid-template-columns: 1fr; } }
+
+        /* --- WHATSAPP FLOATING WIDGET --- */
+        .whatsapp-float {
+            position: fixed; bottom: 20px; left: 20px;
+            width: 60px; height: 60px;
+            background-color: #25D366; color: #FFF;
+            border-radius: 50%; text-align: center;
+            font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); background-color: #20b858; }
+        .whatsapp-icon { width: 35px; height: 35px; fill: white; }
+        .whatsapp-tooltip {
+            position: absolute; left: 70px; top: 50%; transform: translateY(-50%);
+            background: #333; color: white; padding: 6px 12px;
+            border-radius: 5px; font-size: 14px; font-weight: 700;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .whatsapp-tooltip::before {
+            content: ''; position: absolute; left: -6px; top: 50%; transform: translateY(-50%);
+            border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent #333 transparent transparent;
+        }
+        .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; left: 75px; }
+    </style>
+</head>
+<body>
+
+    <header class="floating-header">
+        <div class="mobile-toggle" onclick="toggleMenu()">&#9776;</div>
+        <nav class="nav-group">
+            <a href="#contact" class="nav-link">اتصل بنا</a>
+            <a href="#about" class="nav-link">من نحن</a>
+        </nav>
+        <a href="#" class="logo">Prumysl</a>
+        <nav class="nav-group">
+            <a href="#products" class="nav-link">كاميرات شمسية</a>
+            <a href="#batteries" class="nav-link">بطاريات قابلة للشحن</a>
+        </nav>
+    </header>
+
+    <div class="mobile-menu-container" id="mobileMenu">
+        <a href="#products" class="mobile-link">كاميرات شمسية</a>
+        <a href="#batteries" class="mobile-link">بطاريات قابلة للشحن</a>
+        <a href="#contact" class="mobile-link">اتصل بنا</a>
+        <a href="#about" class="mobile-link">من نحن</a>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>أمن ذكي وطاقة مستدامة</h1>
+            <p>حلول Prumysl الصناعية: كاميرات شمسية وبطاريات تدوم طويلاً.</p>
+            <a href="#products" class="hero-btn">اكتشف المنتجات</a>
+        </div>
+    </section>
+
+    <section id="products" class="products-section">
+        <h2 class="section-title">أحدث الكاميرات الشمسية</h2>
+        
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="card-img-container">
+                    <span class="badge">4G PTZ</span>
+                    <img src="img/Prumysl Omni-Guard 360°.jpg" alt="Omni-Guard" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">Prumysl Omni-Guard 360°</h3>
+                    <p class="product-desc">كاميرا شمسية 4G ثلاثية العدسات PTZ، بدقة 15 ميغابكسيل، 3 شاشات حية ومراقبة 360°.</p>
+                    <div class="product-footer">
+                        <span class="price">1200 DH</span>
+                        <a href="product.html?id=1" class="buy-btn">شراء الآن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <span class="badge">6K Zoom</span>
+                    <img src="img/Prumysl Vision 6K Pro.jpg" alt="Vision 6K" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">Prumysl Vision 6K Pro</h3>
+                    <p class="product-desc">كاميرا 3 عدسات 15MP 6K، زووم 10X، وتغطية 360 درجة بلا نقاط عمياء.</p>
+                    <div class="product-footer">
+                        <span class="price">1100 DH</span>
+                        <a href="product.html?id=2" class="buy-btn">شراء الآن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <span class="badge">Eco 4G</span>
+                    <img src="img/Prumysl Euro-Shield.jpg" alt="Euro-Shield" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">Prumysl Euro-Shield</h3>
+                    <p class="product-desc">نسخة أوروبية متطورة، لوحين للطاقة وبطارية مدمجة، مصممة خصيصاً للضيعات.</p>
+                    <div class="product-footer">
+                        <span class="price">899 DH</span>
+                        <a href="product.html?id=3" class="buy-btn">شراء الآن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <span class="badge">WiFi/4G</span>
+                    <img src="img/Prumysl Duo 18W.jpg" alt="Duo 18W" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">Prumysl Duo 18W</h3>
+                    <p class="product-desc">كاميرا منخفضة الاستهلاك، 15 ميغابكسيل، لوحين 18W، متوفرة بنسخة WiFi أو 4G.</p>
+                    <div class="product-footer">
+                        <span class="price">699 DH</span>
+                        <a href="product.html?id=4" class="buy-btn">شراء الآن</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="card-img-container">
+                    <span class="badge">36X Zoom</span>
+                    <img src="img/Prumysl Falcon 36X.jpg" alt="Falcon 36X" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h3 class="product-title">Prumysl Falcon 36X</h3>
+                    <p class="product-desc">أقوى كاميرا للمراقبة: 24 ميغابكسل، زووم بصري 36X وبطارية 12000mAh.</p>
+                    <div class="product-footer">
+                        <span class="price">2800 DH</span>
+                        <a href="product.html?id=5" class="buy-btn">شراء الآن</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="batteries" class="battery-section">
+        <div class="battery-container">
+            <div class="battery-img-box">
+                <img src="img/Rechargeable-batteries.png" alt="Batteries" class="battery-img">
+            </div>
+            <div class="battery-content">
+                <span class="promo-tag">عرض خاص</span>
+                <h2 class="battery-title">بطاريات صناعية قابلة للشحن</h2>
+                <p style="margin-bottom: 25px; color:#555; line-height:1.6;">بطاريات ليثيوم عالية الجودة تدوم طويلاً، مثالية للكاميرات والأجهزة الإلكترونية.</p>
+                <div class="offer-grid">
+                    <div class="offer-card">
+                        <div style="color:#666">قطعتين (2 Pieces)</div>
+                        <div class="offer-price">149 DH</div>
+                    </div>
+                    <div class="offer-card featured">
+                        <div style="color:#666">4 قطع (4 Pieces)</div>
+                        <div class="offer-price">249 DH</div>
+                    </div>
+                </div>
+                <a href="product.html?id=batteries" class="redirect-btn">اطلب الآن</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="quality-section">
+        <div class="quality-header">
+            <h2>لماذا تختار بروميسل؟</h2>
+            <p>جودة صناعية مصممة للعمل في أصعب الظروف المناخية دون توقف.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">&#9889;</div>
+                <h3>طاقة مستدامة</h3>
+                <p class="feature-text">ألواح شمسية مزدوجة وبطاريات 8000mAh.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">&#128246;</div>
+                <h3>اتصال 4G</h3>
+                <p class="feature-text">تعمل بدون واي-فاي، مثالية للمناطق النائية.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">&#128065;</div>
+                <h3>دقة 6K</h3>
+                <p class="feature-text">عدسات متعددة وتقريب بصري لتفاصيل واضحة.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">&#128737;</div>
+                <h3>صلابة صناعية</h3>
+                <p class="feature-text">مقاومة للماء والغبار والحرارة العالية (IP66).</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <h2 class="section-title">قصص نجاح عملائنا</h2>
+        <div class="reviews-wrapper">
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://ui-avatars.com/api/?name=Hassan&background=e6b800&color=fff" class="review-avatar" alt="Hassan">
+                    <div class="reviewer-info">
+                        <h4>حسن ب.</h4>
+                        <span>أكادير</span>
+                    </div>
+                </div>
+                <div class="verified-badge">✔ قام بالشراء</div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"ركبت Falcon 36X فالضيعة. الزووم خيالي! كنقدر نقرا الماتريكول من الباب الرئيسي على بعد 200 متر. أحسن استثمار درت."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://ui-avatars.com/api/?name=Fatima&background=333&color=fff" class="review-avatar" alt="Fatima">
+                    <div class="reviewer-info">
+                        <h4>فاطمة الزهراء</h4>
+                        <span>بوسكورة</span>
+                    </div>
+                </div>
+                <div class="verified-badge">✔ قام بالشراء</div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"كنت خايفة من الغيام فالشتاء، ولكن البطارية ما عمرها خوات. الديكور ديال Euro-Shield جا راقي بزاف فالفلا."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://ui-avatars.com/api/?name=Karim&background=e6b800&color=fff" class="review-avatar" alt="Karim">
+                    <div class="reviewer-info">
+                        <h4>كريم التازي</h4>
+                        <span>طنجة</span>
+                    </div>
+                </div>
+                <div class="verified-badge">✔ قام بالشراء</div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"التوصيل كان سريع لطنجة (24 ساعة). التركيب خدا مني 10 دقايق بلا تقني. التطبيق سريع بزاف."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://ui-avatars.com/api/?name=Youssef&background=333&color=fff" class="review-avatar" alt="Youssef">
+                    <div class="reviewer-info">
+                        <h4>يوسف ع.</h4>
+                        <span>الراشيدية</span>
+                    </div>
+                </div>
+                <div class="verified-badge">✔ قام بالشراء</div>
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"الريزو ديال 4G مجهد حتا هنا فالصحراء. التنبيه ديال الحركة كيفيقني دغيا إلا قرب شي حد للغنم."</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <h2 class="section-title">أسئلة يتكرر طرحها</h2>
+        <div class="faq-container">
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaqNew(this)">
+                    هل تعمل الكاميرا إذا استمر المطر لعدة أيام؟
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    نعم! بطارياتنا ضخمة (8000 إلى 12000mAh) وتستطيع تشغيل الكاميرا لـ 3-4 أيام متواصلة بدون شمس نهائياً. الألواح المتطورة تشحن بضوء النهار أيضاً وليس الشمس المباشرة فقط.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaqNew(this)">
+                    كم تستهلك من رصيد الإنترنت (4G)؟
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    قليل جداً. الكاميرا تستهلك البيانات فقط عندما تفتح التطبيق للمشاهدة المباشرة أو عند إرسال تنبيهات. تعبئة بسيطة بـ 20 درهم (2GB) كافية عادة لشهر كامل من الاستخدام الطبيعي.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaqNew(this)">
+                    هل تعمل مع جميع بطاقات SIM؟
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    نعم، الكاميرات مفتوحة وتعمل مع جميع الشبكات المغربية (Maroc Telecom, Orange, Inwi). فقط تأكد من إزالة كود PIN من البطاقة قبل تركيبها في الكاميرا.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaqNew(this)">
+                    هل يمكنني الدفع بعد فتح الطرد والتأكد؟
+                    <span class="toggle-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    بالتأكيد. نحن نثق في جودة منتجاتنا. نوفر لك توصيلاً مجانياً ولا تدفع أي درهم إلا بعد استلام المنتج وفحصه بنفسك (سواء عبر أمانة أو موزعينا الخاصين).
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="contact" class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRUMYSL</h3>
+                <p>حلول الطاقة الشمسية والأمن الذكي.<br>مصممة للمصانع، الضيعات، والمنازل.</p>
+            </div>
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="#about">من نحن</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>تواصل معنا</h3>
+                <ul>
+                    <li>الهاتف: 0600000000</li>
+                    <li>البريد: info@prumysl.store</li>
+                    <li>العنوان: الدار البيضاء، المغرب</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Prumysl. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/212600000000" class="whatsapp-float" target="_blank">
+        <span class="whatsapp-tooltip">تواصل معنا</span>
+        <svg viewBox="0 0 32 32" class="whatsapp-icon"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.475.642 4.85 1.863 6.963L2.3 29.7l6.9-1.808A13.926 13.926 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z"/></svg>
+    </a>
+
+    <script>
+        function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        
+        function toggleFaqNew(button) {
+            const item = button.parentElement;
+            const answer = item.querySelector('.faq-answer');
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('active');
+                i.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>
