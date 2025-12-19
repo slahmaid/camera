@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تفاصيل المنتج - Prumysl</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -18,37 +18,19 @@
             --whatsapp: #25D366;
             --urgent-bg: #ffeaea;
             --urgent-text: #d9534f;
-            --header-h-desktop: 70px;
-            --header-h-mobile: 60px;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        html { scroll-behavior: smooth; }
-        
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background-color: #fcfcfc; 
-            color: var(--text); 
-            overflow-x: hidden; 
-            padding-bottom: 80px; 
-            -webkit-tap-highlight-color: transparent;
-        }
-        
+        body { font-family: 'Cairo', sans-serif; background-color: #fcfcfc; color: var(--text); overflow-x: hidden; padding-bottom: 80px; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
         /* --- HEADER --- */
         .floating-header {
-            position: fixed; top: 0; left: 0; right: 0; 
-            height: var(--header-h-desktop); 
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px); z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 30px; 
+            position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; 
             border-bottom: 1px solid #eee;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); }
+        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
         .back-btn { font-weight: 700; font-size: 1rem; color: var(--dark); display: flex; align-items: center; gap: 5px; }
         .back-btn:hover { color: var(--primary); }
 
@@ -65,28 +47,24 @@
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: start;
         }
 
-        /* --- DESKTOP GALLERY --- */
+        /* --- LEFT COLUMN: GALLERY --- */
         .product-gallery { position: relative; }
         .main-img-wrap {
             width: 100%; height: 500px; border-radius: 10px; overflow: hidden;
             border: 1px solid #eee; margin-bottom: 15px; position: relative;
-            background: #fff; cursor: zoom-in;
+            background: #fff;
         }
         .main-img {
-            width: 100%; height: 100%; object-fit: contain;
-            transition: transform 0.5s ease;
+            width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease;
         }
         .main-img-wrap:hover .main-img { transform: scale(1.1); }
         
         .thumbnails { display: flex; gap: 10px; }
         .thumb {
-            width: 100px; height: 100px; object-fit: contain; border-radius: 8px; cursor: pointer;
-            border: 2px solid #eee; opacity: 0.7; transition: 0.3s; background: #fff;
+            width: 100px; height: 100px; object-fit: cover; border-radius: 8px; cursor: pointer;
+            border: 2px solid #eee; opacity: 0.7; transition: 0.3s;
         }
         .thumb:hover, .thumb.active { border-color: var(--primary); opacity: 1; }
-
-        /* --- MOBILE GALLERY (New Feature) --- */
-        .mobile-gallery-wrapper { display: none; } /* Hidden on desktop */
 
         /* --- RIGHT COLUMN: INFO & FORM --- */
         .product-info { padding-top: 10px; }
@@ -98,17 +76,24 @@
         .stars { color: #ffc107; letter-spacing: 2px; }
 
         /* Price */
-        .price-box { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .price-box { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
         .current-price { font-size: 2rem; font-weight: 900; color: var(--dark); }
         .old-price { text-decoration: line-through; color: #999; font-size: 1.3rem; }
         .discount-tag { background: #ffeaea; color: #d9534f; padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; }
 
-        /* --- COUNTDOWN TIMER --- */
+        /* --- NEW: COUNTDOWN TIMER --- */
         .timer-box {
-            background-color: var(--urgent-bg); color: var(--urgent-text);
-            padding: 12px 15px; border-radius: 8px; margin-bottom: 25px;
-            font-weight: 700; display: flex; align-items: center; gap: 10px;
-            border: 1px solid #ffcccc; animation: pulse 2s infinite;
+            background-color: var(--urgent-bg);
+            color: var(--urgent-text);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ffcccc;
+            animation: pulse 2s infinite;
         }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.4); }
@@ -116,7 +101,7 @@
             100% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0); }
         }
         .timer-icon { font-size: 1.2rem; }
-        .timer-text { flex-grow: 1; font-size: 0.95rem; }
+        .timer-text { flex-grow: 1; }
         .countdown-digits { font-family: monospace; font-size: 1.2rem; font-weight: 800; }
 
         /* Social Proof & Stock */
@@ -130,7 +115,6 @@
         .order-card {
             background: white; padding: 25px; border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 2px solid var(--primary);
-            scroll-margin-top: 100px; /* Offset for sticky header scroll */
         }
         .order-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd; }
         .order-header h4 { font-weight: 800; color: var(--dark); margin-bottom: 5px; }
@@ -138,8 +122,7 @@
         .form-group { margin-bottom: 15px; position: relative; }
         .form-input {
             width: 100%; padding: 14px 15px; border: 1px solid #ddd; border-radius: 6px;
-            font-family: inherit; font-size: 16px; /* 16px prevents iOS zoom */
-            transition: 0.3s; background: #fcfcfc;
+            font-family: inherit; font-size: 1rem; transition: 0.3s; background: #fcfcfc;
         }
         .form-input:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 3px rgba(230, 184, 0, 0.1); }
         
@@ -150,7 +133,7 @@
         }
         .submit-btn:hover { background: var(--primary); color: #000; transform: translateY(-2px); }
 
-        /* Desktop WhatsApp Button */
+        /* ADDED: Desktop WhatsApp Button */
         .wa-order-btn {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             width: 100%; padding: 12px; margin-top: 15px;
@@ -173,7 +156,7 @@
         .tab-btn {
             padding: 15px 30px; background: none; border: none; font-family: inherit;
             font-size: 1.1rem; font-weight: 700; color: #888; cursor: pointer;
-            border-bottom: 3px solid transparent; transition: 0.3s; white-space: nowrap;
+            border-bottom: 3px solid transparent; transition: 0.3s;
         }
         .tab-btn.active { color: var(--dark); border-bottom-color: var(--primary); }
         
@@ -191,42 +174,28 @@
         .related-grid { 
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; 
         }
-        .r-card { background: white; border-radius: 8px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
+        .r-card { background: white; border-radius: 8px; overflow: hidden; transition: 0.3s; }
         .r-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .r-img { width: 100%; height: 200px; object-fit: contain; background: #fff; border-bottom: 1px solid #eee; }
-        .r-body { padding: 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;}
+        .r-img { width: 100%; height: 180px; object-fit: contain; padding: 10px; background: #fff; }
+        .r-body { padding: 15px; text-align: center; }
         .r-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; color: var(--dark); }
         .r-price { color: var(--primary); font-weight: 800; }
 
-        /* --- FOOTER --- */
-        .site-footer { background-color: #222; color: #aaa; padding: 60px 20px 20px; text-align: right; margin-bottom: 0; }
-        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .footer-col h3 { color: var(--primary); margin-bottom: 20px; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; }
-        .footer-col a { color: #aaa; } .footer-col a:hover { color: var(--primary); }
-        .footer-bottom { border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; text-align: center; }
-
-        /* --- MOBILE STICKY BAR --- */
+        /* --- MOBILE FOOTER & BUTTONS --- */
         .mobile-sticky-bar {
             display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white;
-            padding: 10px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 999;
+            padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 999;
             justify-content: space-between; align-items: center; gap: 10px;
-            padding-bottom: max(10px, env(safe-area-inset-bottom)); /* iPhone X fix */
         }
-        .m-info-box { display: flex; flex-direction: column; justify-content: center; }
-        .m-label { font-size: 0.75rem; color: #777; margin-bottom: -2px; }
-        .m-price { font-size: 1.3rem; font-weight: 900; color: var(--dark); line-height: 1; }
-        .m-btn { 
-            background: var(--primary); color: #000; padding: 14px 10px; border-radius: 8px; 
-            font-weight: 800; flex-grow: 2; text-align: center; box-shadow: 0 4px 10px rgba(230, 184, 0, 0.3);
-        }
+        .m-price { font-size: 1.2rem; font-weight: 900; color: var(--dark); }
+        .m-btn { background: var(--primary); color: #000; padding: 12px 10px; border-radius: 5px; font-weight: 700; flex-grow: 2; text-align: center; }
         .m-wa-btn { 
-            background: #f0fdf4; color: var(--whatsapp); padding: 12px; 
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            flex-grow: 0; width: 52px; border: 1px solid #dcfce7;
+            background: var(--whatsapp); color: white; padding: 12px; 
+            border-radius: 5px; display: flex; align-items: center; justify-content: center;
+            flex-grow: 0; width: 50px; transition: 0.2s;
         }
-        .m-wa-btn svg { width: 26px; height: 26px; fill: currentColor; }
+        .m-wa-btn:active { background: #1ebc57; }
+        .m-wa-btn svg { width: 24px; height: 24px; fill: white; }
 
         /* --- WHATSAPP FLOATING WIDGET --- */
         .whatsapp-float {
@@ -248,92 +217,46 @@
         }
         .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; left: 75px; }
 
-        /* --- FAKE NOTIFICATION POPUP --- */
+        /* --- NEW: FAKE NOTIFICATION POPUP --- */
         .sales-popup {
             position: fixed; bottom: 20px; right: 20px; z-index: 1500;
-            background: #fff; padding: 12px; border-radius: 10px;
+            background: #fff; padding: 15px; border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15); border-right: 4px solid var(--primary);
-            display: flex; align-items: center; gap: 10px;
-            max-width: 320px;
-            transform: translateY(150%);
+            display: flex; align-items: center; gap: 12px;
+            max-width: 350px;
+            transform: translateY(150%); /* Hidden initially */
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .sales-popup.show { transform: translateY(0); }
-        .sales-popup img { width: 45px; height: 45px; border-radius: 6px; object-fit: contain; background:#f9f9f9; }
-        .sales-text { font-size: 0.85rem; line-height: 1.3; color: #333; }
+        .sales-popup img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; }
+        .sales-text { font-size: 0.9rem; line-height: 1.4; color: #333; }
         .sales-text strong { display: block; color: var(--dark); font-weight: 800; }
-        .sales-time { font-size: 0.7rem; color: #888; }
-        .check-icon { color: var(--success); font-size: 0.9rem; margin-right: 3px; }
+        .sales-time { font-size: 0.75rem; color: #888; }
+        .check-icon { color: var(--success); font-size: 1rem; margin-right: 5px; }
 
-        /* --- MOBILE MEDIA QUERIES (Enhanced) --- */
         @media (max-width: 900px) {
-            .product-container { grid-template-columns: 1fr; gap: 30px; padding: 0 15px; }
-            .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-container { grid-template-columns: 1fr; gap: 30px; }
+            .main-img-wrap { height: 350px; }
+            .related-grid { grid-template-columns: repeat(2, 1fr); }
             .mobile-sticky-bar { display: flex; } 
             body { padding-bottom: 90px; } 
-            .footer-container { grid-template-columns: 1fr; text-align: center; }
-            .site-footer { text-align: center; padding-bottom: 100px; } /* Space for sticky bar */
-
-            /* Move floats up so they don't cover sticky bar */
-            .whatsapp-float { bottom: 90px; left: 15px; width: 50px; height: 50px; }
-            .whatsapp-icon { width: 28px; height: 28px; }
-            .sales-popup { bottom: 90px; right: 10px; left: 10px; width: auto; max-width: none; }
-            
-            /* Hide Desktop Gallery */
-            .product-gallery { display: none; }
-            
-            /* Show Mobile Gallery */
-            .mobile-gallery-wrapper { 
-                display: block; position: relative; margin: 0 -15px 15px -15px; /* Full width bleed */
-            }
-            .mobile-slider {
-                display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
-                background: #fff; padding-bottom: 20px;
-            }
-            .mobile-slide {
-                flex: 0 0 100%; width: 100%; height: 350px; 
-                scroll-snap-align: center; position: relative;
-                display: flex; align-items: center; justify-content: center;
-            }
-            .mobile-slide img { max-width: 95%; max-height: 95%; object-fit: contain; }
-            
-            .slider-dots {
-                position: absolute; bottom: 5px; left: 0; right: 0;
-                display: flex; justify-content: center; gap: 6px; pointer-events: none;
-            }
-            .dot { width: 8px; height: 8px; border-radius: 50%; background: #e0e0e0; transition: 0.3s; }
-            .dot.active { background: var(--primary); transform: scale(1.2); }
-
-            /* Header adjustments */
-            .floating-header { height: var(--header-h-mobile); padding: 0 15px; }
-            .breadcrumbs { margin-top: 80px; padding: 0 15px; font-size: 0.8rem; }
-            
-            /* Typography Scale Down */
-            .product-title { font-size: 1.6rem; }
-            .product-category { font-size: 0.8rem; }
-            
-            /* Tabs scrollable */
-            .tabs-header { overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; }
-            .tab-btn { padding: 12px 20px; font-size: 1rem; flex-shrink: 0; }
-            
-            /* Form input fix */
-            .form-input { font-size: 16px; }
+            /* Push elements up above the mobile bar */
+            .whatsapp-float { bottom: 90px; } 
+            /* MODIFIED: Hide Sales Popup on Mobile */
+            .sales-popup { display: none !important; }
         }
-
         @media (min-width: 901px) {
-            .mobile-sticky-bar { display: none !important; }
+            .mobile-sticky-bar { display: none; }
         }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <header class="floating-header">
-        <a href="index.html" class="back-btn">&#8594; <span style="display:none;">العودة</span></a>
+        <a href="index.html" class="back-btn">&#8594; العودة للمتجر</a>
         <div class="logo">Prumysl</div>
-        <div style="width: 40px;"></div> 
+        <div style="width: 80px;"></div> 
     </header>
 
     <div class="breadcrumbs">
@@ -347,14 +270,7 @@
                 <img id="main-img" src="" alt="Product" class="main-img">
             </div>
             <div class="thumbnails" id="thumbs-container">
-                </div>
-        </div>
-
-        <div class="mobile-gallery-wrapper">
-            <div class="mobile-slider" id="mobile-slider">
-                </div>
-            <div class="slider-dots" id="slider-dots">
-                </div>
+            </div>
         </div>
 
         <div class="product-info">
@@ -374,7 +290,7 @@
 
             <div class="timer-box">
                 <span class="timer-icon">⏳</span>
-                <span class="timer-text">ينتهي العرض خلال:</span>
+                <span class="timer-text">عرض محدود! ينتهي الطلب خلال:</span>
                 <span class="countdown-digits" id="countdown">02:00:00</span>
             </div>
 
@@ -458,43 +374,14 @@
         <div class="related-grid" id="related-grid">
         </div>
     </section>
-    
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>PRUMYSL</h3>
-                <p>حلول الطاقة الشمسية والأمن الذكي.<br>مصممة للمصانع، الضيعات، والمنازل.</p>
-            </div>
-            <div class="footer-col">
-                <h3>روابط سريعة</h3>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="index.html#products">المنتجات</a></li>
-                    <li><a href="about.html">من نحن</a></li>
-                    <li><a href="contact.html">اتصل بنا</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>تواصل معنا</h3>
-                <ul>
-                    <li>الهاتف: 0600000000</li>
-                    <li>البريد: info@prumysl.store</li>
-                    <li>العنوان: الدار البيضاء، المغرب</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Prumysl. جميع الحقوق محفوظة.</p>
-        </div>
-    </footer>
 
     <div class="mobile-sticky-bar">
-        <div class="m-info-box">
-            <div class="m-label">الإجمالي:</div>
+        <div>
+            <div style="font-size:0.8rem; color:#777;">السعر الإجمالي</div>
             <div id="m-price" class="m-price">...</div>
         </div>
-        <div style="display:flex; gap:8px; flex-grow:1; justify-content: flex-end;">
-            <a href="#" id="wa-btn-mobile" target="_blank" class="m-wa-btn" aria-label="WhatsApp">
+        <div style="display:flex; gap:10px; flex-grow:1; justify-content: flex-end;">
+            <a href="#" id="wa-btn-mobile" target="_blank" class="m-wa-btn">
                 <svg viewBox="0 0 32 32"><path d="M16 2C8.269 2 2 8.269 2 16c0 2.485.643 4.821 1.764 6.845L2.1 29.9l7.247-1.62C11.306 29.357 13.585 30 16 30c7.731 0 14-6.269 14-14S23.731 2 16 2zm0 25.867c-2.14 0-4.162-.57-5.918-1.564l-.424-.24-4.398.983 1.01-4.29-.264-.442A11.82 11.82 0 014.133 16c0-6.543 5.324-11.867 11.867-11.867S27.867 9.457 27.867 16 22.543 27.867 16 27.867zm6.524-8.875c-.356-.178-2.112-1.04-2.438-1.16-.326-.118-.564-.178-.802.179-.237.356-.92 1.159-1.128 1.396-.208.238-.416.267-.772.089-.356-.178-1.504-.555-2.865-1.769-1.059-.945-1.774-2.112-1.982-2.468-.208-.356-.022-.549.156-.727.16-.159.356-.416.535-.624.178-.208.237-.356.356-.594.119-.238.059-.446-.03-.624-.089-.178-.802-1.933-1.098-2.646-.29-.696-.584-.6-.802-.612-.207-.012-.445-.012-.683-.012-.237 0-.623.089-.95.446-.326.356-1.247 1.218-1.247 2.97 0 1.753 1.277 3.447 1.455 3.685.178.238 2.513 3.838 6.088 5.381.85.367 1.513.586 2.031.751.854.272 1.632.234 2.245.142.684-.103 2.112-.862 2.408-1.694.297-.832.297-1.545.208-1.694-.089-.149-.327-.238-.683-.416z"/></svg>
             </a>
             <a href="#orderForm" class="m-btn">اطلب الآن</a>
@@ -510,7 +397,7 @@
         </div>
     </div>
 
-    <a href="https://wa.me/212600000000" class="whatsapp-float" target="_blank" aria-label="WhatsApp Support">
+    <a href="https://wa.me/212600000000" class="whatsapp-float" target="_blank">
         <span class="whatsapp-tooltip">تواصل معنا</span>
         <svg viewBox="0 0 32 32" class="whatsapp-icon"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.475.642 4.85 1.863 6.963L2.3 29.7l6.9-1.808A13.926 13.926 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z"/></svg>
     </a>
@@ -526,7 +413,8 @@
                 fullDesc: "كاميرا مراقبة شمسية احترافية بثلاث عدسات PTZ مدمجة في جهاز واحد، كل عدسة تتحكم فيها من الهاتف، بدقّة 15 ميغابكسيل (3×5MP). تأتي مع بطارية ضخمة 8000mAh ولوحين شمسيين بقدرة إجمالية 16W لضمان العمل المستمر. تعمل بشريحة 4G لتعطيك مراقبة 360° بلا نقاط عمياء.",
                 images: [
                     "img/Prumysl Omni-Guard 360°/Prumysl Omni-Guard 360°-main.jpg",
-                    "img/Prumysl Omni-Guard 360°/Prumysl Omni-Guard 360°-thumb-2.jpg"
+                    "img/Prumysl Omni-Guard 360°/Prumysl Omni-Guard 360°-thumb-2.jpg",
+                    "img/Prumysl Omni-Guard 360°.jpg"
                 ],
                 specs: {
                     "الدقة": "15 ميغابكسل (3 عدسات)",
@@ -619,9 +507,9 @@
                 desc: "بطاريات ليثيوم عالية الجودة تدوم طويلاً (قطعتين).",
                 fullDesc: "بطاريات ليثيوم أيون قابلة للشحن، مصممة خصيصاً للأجهزة التي تستهلك طاقة عالية مثل الكاميرات الشمسية. عمر افتراضي طويل وسرعة شحن عالية.",
                 images: [
+                    "img/Rechargeable-batteries.png",
                     "img/OFFER-1.jpg",
-                    "img/OFFER-2.jpg",
-                    "img/Rechargeable-batteries.png"
+                    "img/OFFER-2.jpg"
                 ],
                 specs: {
                     "النوع": "Lithium Ion",
@@ -634,7 +522,7 @@
 
         // --- 2. INIT PAGE ---
         const params = new URLSearchParams(window.location.search);
-        let pid = params.get('id') || 1; 
+        let pid = params.get('id') || 1; // Default to 1 if empty
         const product = products[pid];
 
         if(product) {
@@ -656,20 +544,13 @@
             document.getElementById('wa-btn-desktop').href = waLink;
             document.getElementById('wa-btn-mobile').href = waLink;
 
-            // --- GALLERY LOGIC ---
-            
-            // Desktop (Main + Thumbs)
+            // Gallery
             const mainImg = document.getElementById('main-img');
             const thumbsCont = document.getElementById('thumbs-container');
-            const mobileSlider = document.getElementById('mobile-slider');
-            const sliderDots = document.getElementById('slider-dots');
             
             if(product.images.length > 0) {
-                // Set initial main image
                 mainImg.src = product.images[0];
-                
                 product.images.forEach((src, idx) => {
-                    // Populate Desktop Thumbs
                     let img = document.createElement('img');
                     img.src = src;
                     img.className = idx === 0 ? 'thumb active' : 'thumb';
@@ -679,33 +560,6 @@
                         img.classList.add('active');
                     };
                     thumbsCont.appendChild(img);
-
-                    // Populate Mobile Slider (Native Swipe)
-                    let slideDiv = document.createElement('div');
-                    slideDiv.className = 'mobile-slide';
-                    let slideImg = document.createElement('img');
-                    slideImg.src = src;
-                    slideDiv.appendChild(slideImg);
-                    mobileSlider.appendChild(slideDiv);
-
-                    // Populate Dots
-                    let dot = document.createElement('div');
-                    dot.className = idx === 0 ? 'dot active' : 'dot';
-                    sliderDots.appendChild(dot);
-                });
-
-                // Mobile Slider Scroll Listener (To update dots)
-                mobileSlider.addEventListener('scroll', () => {
-                    const scrollPos = mobileSlider.scrollLeft;
-                    const width = mobileSlider.offsetWidth;
-                    // Since RTL, scrollLeft might be negative or calculated differently in some browsers, 
-                    // but for horizontal scroll snap usually standard index calculation works.
-                    // Note: In strict RTL, scrollLeft is negative. Math.abs fixes this.
-                    const index = Math.round(Math.abs(scrollPos) / width);
-                    
-                    document.querySelectorAll('.dot').forEach((d, i) => {
-                        d.classList.toggle('active', i === index);
-                    });
                 });
             }
 
@@ -720,10 +574,10 @@
             const relatedGrid = document.getElementById('related-grid');
             let count = 0;
             for (const [key, p] of Object.entries(products)) {
-                if (key !== pid && count < 3) {
+                if (key != pid && count < 3) {
                     let card = `
                         <div class="r-card">
-                            <a href="product.html?id=${key}" style="flex-grow:1; display:flex; flex-direction:column;">
+                            <a href="product.html?id=${key}">
                                 <img src="${p.images[0]}" class="r-img">
                                 <div class="r-body">
                                     <div class="r-title">${p.title}</div>
@@ -752,8 +606,9 @@
             alert("شكراً لك! تم استلام طلبك. سنتصل بك قريباً للتأكيد.");
         }
 
-        // --- 5. COUNTDOWN TIMER ---
+        // --- 5. NEW: COUNTDOWN TIMER ---
         function startCountdown() {
+            // Set Timer for 2 hours (in seconds)
             let timeInSeconds = 2 * 60 * 60; 
             const timerElement = document.getElementById('countdown');
 
@@ -761,19 +616,24 @@
                 const hours = Math.floor(timeInSeconds / 3600);
                 const minutes = Math.floor((timeInSeconds % 3600) / 60);
                 const seconds = timeInSeconds % 60;
+
+                // Format: 02:00:00
                 timerElement.textContent = 
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
                 if (timeInSeconds > 0) {
                     timeInSeconds--;
                 } else {
+                    // Reset automatically when it hits zero
                     timeInSeconds = 2 * 60 * 60;
                 }
             }
+
             setInterval(updateTimer, 1000);
-            updateTimer(); 
+            updateTimer(); // Initial call
         }
 
-        // --- 6. FAKE SOCIAL PROOF NOTIFICATION ---
+        // --- 6. NEW: FAKE SOCIAL PROOF NOTIFICATION ---
         function startSocialProof() {
             const cities = ["الدار البيضاء", "الرباط", "مراكش", "طنجة", "فاس", "أكادير", "مكناس", "وجدة"];
             const popup = document.getElementById('sales-popup');
@@ -781,22 +641,32 @@
             const prodEl = document.getElementById('popup-product');
             const imgEl = document.getElementById('popup-img');
 
+            // Convert products object to array for random selection
             const productKeys = Object.keys(products);
 
             setInterval(() => {
+                // Pick Random Data
                 const randomCity = cities[Math.floor(Math.random() * cities.length)];
                 const randomKey = productKeys[Math.floor(Math.random() * productKeys.length)];
                 const randomProduct = products[randomKey];
 
+                // Update Content
                 cityEl.innerText = randomCity;
                 prodEl.innerText = randomProduct.title;
-                imgEl.src = randomProduct.images[0]; 
+                imgEl.src = randomProduct.images[0]; // Use first image of that product
 
+                // Show Popup
                 popup.classList.add('show');
-                setTimeout(() => { popup.classList.remove('show'); }, 5000);
-            }, 20000); 
+
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 5000);
+
+            }, 20000); // Repeat every 20 seconds
         }
 
+        // Init New Features
         window.onload = function() {
             startCountdown();
             startSocialProof();
