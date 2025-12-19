@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prumysl - Industrial Solar Solutions</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-
     <style>
         /* --- RESET & GLOBAL --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +15,7 @@
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
-        a { text-decoration: none; }
+        a { text-decoration: none; color: inherit; }
 
         /* --- HEADER --- */
         .floating-header {
@@ -96,22 +94,11 @@
             border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; text-align: right;
         }
         .product-card:hover { transform: translateY(-5px); border-color: #e6b800; }
-        
         .card-img-container { 
-            position: relative; 
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: #eee; 
-            overflow: hidden; 
-            padding: 10px;
+            position: relative; width: 100%; aspect-ratio: 1 / 1;
+            background: #eee; overflow: hidden; padding: 10px;
         }
-        
-        .card-img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; /* UPDATED: Changed from cover to contain for full visibility */
-        }
-
+        .card-img { width: 100%; height: 100%; object-fit: contain; }
         .badge {
             position: absolute; top: 10px; right: 10px;
             background: #e6b800; color: #000; font-weight: 700;
@@ -158,15 +145,11 @@
         .feature-box:hover { transform: translateY(-10px); border-color: #e6b800; }
         .feature-icon { font-size: 3rem; margin-bottom: 20px; color: #e6b800; }
 
-        /* --- REVIEWS (Polished) --- */
+        /* --- REVIEWS --- */
         .reviews-section { padding: 80px 20px; background-color: #f9f9f9; overflow: hidden; }
         .reviews-wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 20px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            max-width: 1200px; margin: 0 auto; padding-bottom: 20px;
         }
         .review-card {
             background: white; padding: 20px; border-radius: 12px;
@@ -191,7 +174,7 @@
         .review-stars { color: #ffc107; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 2px; }
         .review-text { font-size: 0.9rem; line-height: 1.6; color: #555; font-style: italic; }
 
-        /* --- FAQ (Polished) --- */
+        /* --- FAQ --- */
         .faq-section { padding: 80px 20px; background-color: #fff; }
         .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         .faq-item { border: 1px solid #eee; border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
@@ -203,7 +186,6 @@
         }
         .faq-question .toggle-icon { font-size: 1.5rem; color: #e6b800; transition: transform 0.3s ease; line-height: 1; }
         .faq-item.active .toggle-icon { transform: rotate(45deg); }
-        .faq-item.active .faq-question { color: #000; }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; color: #666; line-height: 1.7; font-size: 0.95rem; }
         .faq-item.active .faq-answer { padding-bottom: 20px; max-height: 200px; }
 
@@ -265,21 +247,21 @@
     <header class="floating-header">
         <div class="mobile-toggle" onclick="toggleMenu()">&#9776;</div>
         <nav class="nav-group">
-            <a href="#contact" class="nav-link">اتصل بنا</a>
-            <a href="#about" class="nav-link">من نحن</a>
+            <a href="contact.html" class="nav-link">اتصل بنا</a>
+            <a href="about.html" class="nav-link">من نحن</a>
         </nav>
-        <a href="#" class="logo">Prumysl</a>
+        <a href="index.html" class="logo">Prumysl</a>
         <nav class="nav-group">
-            <a href="#products" class="nav-link">كاميرات شمسية</a>
-            <a href="#batteries" class="nav-link">بطاريات قابلة للشحن</a>
+            <a href="index.html#products" class="nav-link">كاميرات شمسية</a>
+            <a href="index.html#batteries" class="nav-link">بطاريات قابلة للشحن</a>
         </nav>
     </header>
 
     <div class="mobile-menu-container" id="mobileMenu">
-        <a href="#products" class="mobile-link">كاميرات شمسية</a>
-        <a href="#batteries" class="mobile-link">بطاريات قابلة للشحن</a>
-        <a href="#contact" class="mobile-link">اتصل بنا</a>
-        <a href="#about" class="mobile-link">من نحن</a>
+        <a href="index.html#products" class="mobile-link">كاميرات شمسية</a>
+        <a href="index.html#batteries" class="mobile-link">بطاريات قابلة للشحن</a>
+        <a href="contact.html" class="mobile-link">اتصل بنا</a>
+        <a href="about.html" class="mobile-link">من نحن</a>
     </div>
 
     <section class="hero">
@@ -392,12 +374,12 @@
                         <div class="offer-price">249 DH</div>
                     </div>
                 </div>
-                <a href="product.html?id=batteries" class="redirect-btn">اطلب الآن</a>
+                <a href="http://prumysl.store/" class="redirect-btn">اطلب الآن</a>
             </div>
         </div>
     </section>
 
-    <section id="about" class="quality-section">
+    <section class="quality-section">
         <div class="quality-header">
             <h2>لماذا تختار بروميسل؟</h2>
             <p>جودة صناعية مصممة للعمل في أصعب الظروف المناخية دون توقف.</p>
@@ -532,7 +514,7 @@
         </div>
     </section>
 
-    <footer id="contact" class="site-footer">
+    <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
                 <h3>PRUMYSL</h3>
@@ -541,9 +523,10 @@
             <div class="footer-col">
                 <h3>روابط سريعة</h3>
                 <ul>
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#products">المنتجات</a></li>
-                    <li><a href="#about">من نحن</a></li>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="index.html#products">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
                 </ul>
             </div>
             <div class="footer-col">

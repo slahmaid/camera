@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن - Prumysl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Reusing global styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f4f4; color: #333; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Header (Same as index) */
+        .floating-header {
+            position: fixed; top: 20px; left: 20px; right: 20px; height: 70px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(12px); border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 30px;
+        }
+        .logo { font-size: 24px; font-weight: 900; color: #222; letter-spacing: 1px; text-transform: uppercase; position: absolute; left: 50%; transform: translateX(-50%); }
+        .nav-group { display: flex; gap: 25px; align-items: center; }
+        .nav-link { color: #444; font-size: 15px; font-weight: 700; transition: color 0.3s ease; white-space: nowrap; }
+        .nav-link:hover { color: #e6b800; }
+        .mobile-toggle { display: none; cursor: pointer; font-size: 24px; color: #333; }
+        
+        /* Mobile Menu */
+        .mobile-menu-container { display: none; position: fixed; top: 100px; left: 20px; right: 20px; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(15px); border-radius: 5px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); flex-direction: column; gap: 15px; text-align: center; z-index: 999; }
+        .mobile-menu-container.active { display: flex; animation: slideIn 0.3s ease-out; }
+        .mobile-link { color: #333; font-size: 18px; font-weight: 700; padding: 10px; border-bottom: 1px solid #eee; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* About Page Content */
+        .about-hero {
+            background-color: #1a1a1a; color: white; padding: 150px 20px 80px; text-align: center;
+        }
+        .about-hero h1 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; color: #e6b800; }
+        .about-hero p { max-width: 700px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; opacity: 0.9; }
+
+        .story-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .story-section h2 { font-size: 2rem; margin-bottom: 30px; font-weight: 800; }
+        .story-text { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 20px; }
+
+        .values-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+            max-width: 1200px; margin: 50px auto 100px; padding: 0 20px;
+        }
+        .value-card {
+            background: white; padding: 30px; border-radius: 10px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 4px solid #222;
+        }
+        .value-card:hover { border-color: #e6b800; transform: translateY(-5px); transition: 0.3s; }
+        .value-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .value-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; }
+
+        /* Footer */
+        .site-footer { background-color: #222; color: #aaa; padding: 60px 20px 20px; text-align: right; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .footer-col h3 { color: #e6b800; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; } .footer-col a:hover { color: #e6b800; }
+        .footer-bottom { border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; text-align: center; }
+
+        @media (max-width: 900px) {
+            .nav-group { display: none; }
+            .mobile-toggle { display: block; position: absolute; right: 30px; }
+            .logo { position: absolute; left: 50%; transform: translateX(-50%); }
+            .values-grid, .footer-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="floating-header">
+        <div class="mobile-toggle" onclick="toggleMenu()">&#9776;</div>
+        <nav class="nav-group">
+            <a href="contact.html" class="nav-link">اتصل بنا</a>
+            <a href="about.html" class="nav-link" style="color:#e6b800;">من نحن</a>
+        </nav>
+        <a href="index.html" class="logo">Prumysl</a>
+        <nav class="nav-group">
+            <a href="index.html#products" class="nav-link">كاميرات شمسية</a>
+            <a href="index.html#batteries" class="nav-link">بطاريات قابلة للشحن</a>
+        </nav>
+    </header>
+
+    <div class="mobile-menu-container" id="mobileMenu">
+        <a href="index.html#products" class="mobile-link">كاميرات شمسية</a>
+        <a href="index.html#batteries" class="mobile-link">بطاريات قابلة للشحن</a>
+        <a href="contact.html" class="mobile-link">اتصل بنا</a>
+        <a href="about.html" class="mobile-link">من نحن</a>
+    </div>
+
+    <section class="about-hero">
+        <h1>قصتنا</h1>
+        <p>نحن Prumysl، رواد الحلول الأمنية المستدامة في المغرب. نجمع بين التكنولوجيا الصناعية والطاقة النظيفة لخدمة الضيعات والمصانع.</p>
+    </section>
+
+    <section class="story-section">
+        <h2>رؤيتنا للمستقبل</h2>
+        <p class="story-text">
+            تأسست Prumysl بهدف بسيط: توفير حلول مراقبة احترافية لا تعتمد على الشبكة الكهربائية التقليدية. لاحظنا في السنوات الأخيرة أن أصحاب الضيعات الفلاحية والمشاريع النائية في المغرب يعانون من مشكلتين أساسيتين: انعدام الكهرباء وصعوبة الوصول للإنترنت الأرضي.
+        </p>
+        <p class="story-text">
+            من هنا جاءت فكرة Prumysl (وهي كلمة تعني "صناعة"). قمنا بتطوير كاميرات تعتمد كلياً على الطاقة الشمسية، مزودة ببطاريات ضخمة وشريحة 4G، لتمنحك استقلالية تامة وراحة بال، سواء كنت تراقب محصولك الزراعي أو مستودعك الصناعي.
+        </p>
+    </section>
+
+    <div class="values-grid">
+        <div class="value-card">
+            <span class="value-icon">🛡️</span>
+            <div class="value-title">الجودة الصناعية</div>
+            <p>لا نبيع الأجهزة البلاستيكية الرخيصة. منتجاتنا مصممة لتحمل حرارة الصيف وأمطار الشتاء القاسية.</p>
+        </div>
+        <div class="value-card">
+            <span class="value-icon">🤝</span>
+            <div class="value-title">الثقة والضمان</div>
+            <p>نحن معك بعد البيع. نقدم ضماناً حقيقياً لمدة سنة كاملة مع توفر قطع الغيار والصيانة.</p>
+        </div>
+        <div class="value-card">
+            <span class="value-icon">🌍</span>
+            <div class="value-title">الاستدامة</div>
+            <p>نؤمن بالطاقة النظيفة. حلولنا توفر عليك فواتير الكهرباء وتحافظ على البيئة.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PRUMYSL</h3>
+                <p>حلول الطاقة الشمسية والأمن الذكي.<br>مصممة للمصانع، الضيعات، والمنازل.</p>
+            </div>
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="index.html#products">المنتجات</a></li>
+                    <li><a href="about.html">من نحن</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>تواصل معنا</h3>
+                <ul>
+                    <li>الهاتف: 0600000000</li>
+                    <li>البريد: info@prumysl.store</li>
+                    <li>العنوان: الدار البيضاء، المغرب</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Prumysl. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+    </script>
+</body>
+</html>
