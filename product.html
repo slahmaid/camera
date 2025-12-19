@@ -24,7 +24,7 @@
             font-family: 'Cairo', sans-serif; 
             background-color: #fcfcfc; 
             color: var(--text); 
-            overflow-x: hidden; /* Prevents horizontal scroll */
+            overflow-x: hidden; 
             padding-bottom: 80px; 
         }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -58,7 +58,7 @@
         .product-gallery { position: relative; width: 100%; }
         .main-img-wrap {
             width: 100%; 
-            height: 500px; /* Default desktop height */
+            height: 500px; 
             border-radius: 10px; overflow: hidden;
             border: 1px solid #eee; margin-bottom: 15px; position: relative;
             background: #fff;
@@ -81,9 +81,21 @@
         .product-category { color: var(--primary); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
         .product-title { font-size: 2rem; font-weight: 900; margin: 5px 0 10px; line-height: 1.2; color: var(--dark); }
         
-        /* Review Stars */
         .reviews-summary { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #666; }
         .stars { color: #ffc107; letter-spacing: 2px; }
+
+        /* OFFER SELECTOR (New Feature) */
+        .offers-container {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; display: none; /* Hidden by default */
+        }
+        .offer-option {
+            border: 2px solid #eee; border-radius: 8px; padding: 10px; cursor: pointer;
+            text-align: center; transition: 0.3s; background: #fff;
+        }
+        .offer-option:hover { border-color: #ddd; }
+        .offer-option.selected { border-color: var(--primary); background: #fffdf5; box-shadow: 0 4px 10px rgba(230, 184, 0, 0.15); }
+        .offer-title { font-size: 0.9rem; color: #555; display: block; margin-bottom: 5px; }
+        .offer-price { font-size: 1.1rem; font-weight: 800; color: var(--dark); display: block; }
 
         /* Price */
         .price-box { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
@@ -91,20 +103,11 @@
         .old-price { text-decoration: line-through; color: #999; font-size: 1.3rem; }
         .discount-tag { background: #ffeaea; color: #d9534f; padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; }
 
-        /* --- NEW: COUNTDOWN TIMER --- */
         .timer-box {
-            background-color: var(--urgent-bg);
-            color: var(--urgent-text);
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #ffcccc;
-            animation: pulse 2s infinite;
-            flex-wrap: wrap;
+            background-color: var(--urgent-bg); color: var(--urgent-text);
+            padding: 12px 15px; border-radius: 8px; margin-bottom: 25px;
+            font-weight: 700; display: flex; align-items: center; gap: 10px;
+            border: 1px solid #ffcccc; animation: pulse 2s infinite; flex-wrap: wrap;
         }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.4); }
@@ -115,14 +118,13 @@
         .timer-text { flex-grow: 1; min-width: 150px; }
         .countdown-digits { font-family: monospace; font-size: 1.2rem; font-weight: 800; }
 
-        /* Social Proof & Stock */
         .meta-info { margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; }
         .stock-status { color: var(--success); font-weight: 700; display: block; margin-bottom: 5px; }
         .view-count { font-size: 0.9rem; color: #555; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
         
         .product-short-desc { line-height: 1.7; color: #555; margin-bottom: 30px; font-size: 1rem; }
 
-        /* STICKY ORDER CARD */
+        /* ORDER CARD */
         .order-card {
             background: white; padding: 20px; border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 2px solid var(--primary);
@@ -144,7 +146,6 @@
         }
         .submit-btn:hover { background: var(--primary); color: #000; transform: translateY(-2px); }
 
-        /* ADDED: Desktop WhatsApp Button */
         .wa-order-btn {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             width: 100%; padding: 12px; margin-top: 15px;
@@ -161,7 +162,7 @@
         .t-icon { font-size: 0.75rem; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .t-icon svg { width: 24px; height: 24px; fill: #555; }
 
-        /* --- TABS SECTION --- */
+        /* --- TABS --- */
         .tabs-container { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; }
         .tabs-header { display: flex; border-bottom: 2px solid #eee; margin-bottom: 30px; overflow-x: auto; white-space: nowrap; }
         .tab-btn {
@@ -170,16 +171,13 @@
             border-bottom: 3px solid transparent; transition: 0.3s; flex-shrink: 0;
         }
         .tab-btn.active { color: var(--dark); border-bottom-color: var(--primary); }
-        
         .tab-content { display: none; line-height: 1.8; color: #555; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
-
-        /* Specs Table */
         .specs-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .specs-table th, .specs-table td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; font-size: 0.95rem; }
         .specs-table th { width: 35%; background: #f9f9f9; font-weight: 700; color: var(--dark); }
 
-        /* --- RELATED PRODUCTS --- */
+        /* --- RELATED --- */
         .related-section { background: #f4f4f4; padding: 50px 20px; }
         .related-title { text-align: center; font-size: 1.6rem; font-weight: 900; margin-bottom: 30px; }
         .related-grid { 
@@ -209,7 +207,7 @@
         .m-wa-btn:active { background: #1ebc57; }
         .m-wa-btn svg { width: 22px; height: 22px; fill: white; }
 
-        /* --- WHATSAPP FLOATING WIDGET --- */
+        /* --- WHATSAPP FLOAT --- */
         .whatsapp-float {
             position: fixed; bottom: 20px; left: 20px;
             width: 55px; height: 55px;
@@ -229,7 +227,7 @@
         }
         .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; left: 70px; }
 
-        /* --- POPUP (Desktop Only) --- */
+        /* --- SALES POPUP --- */
         .sales-popup {
             position: fixed; bottom: 20px; right: 20px; z-index: 1500;
             background: #fff; padding: 15px; border-radius: 10px;
@@ -248,33 +246,18 @@
 
         /* --- RESPONSIVE MEDIA QUERIES --- */
         @media (max-width: 900px) {
-            /* Layout Changes */
             .product-container { grid-template-columns: 1fr; gap: 20px; padding: 0 15px; }
             .related-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            
-            /* Image Gallery - Fix for Mobile */
-            .main-img-wrap { 
-                height: auto; 
-                aspect-ratio: 1 / 1; /* Ensures square box on any mobile width */
-                width: 100%;
-            }
+            .main-img-wrap { height: auto; aspect-ratio: 1 / 1; width: 100%; }
             .thumbnails { padding-bottom: 10px; }
             .thumb { width: 70px; height: 70px; }
-
-            /* Text Sizes */
             .product-title { font-size: 1.6rem; }
             .current-price { font-size: 1.8rem; }
             .order-header h4 { font-size: 1rem; }
-
-            /* Footer & Buttons */
             .mobile-sticky-bar { display: flex; } 
             body { padding-bottom: 90px; } 
-            
-            /* Floating Elements Position */
             .whatsapp-float { bottom: 85px; width: 50px; height: 50px; left: 15px; } 
             .whatsapp-icon { width: 28px; height: 28px; }
-
-            /* Hide Popup on Mobile */
             .sales-popup { display: none !important; }
         }
 
@@ -316,6 +299,9 @@
                 <span>4.9 (142 تقييم)</span>
             </div>
 
+            <div id="offers-container" class="offers-container">
+                </div>
+
             <div class="price-box">
                 <span id="p-price" class="current-price">...</span>
                 <span id="p-old-price" class="old-price">...</span>
@@ -350,6 +336,8 @@
                     <div class="form-group">
                         <input type="tel" class="form-input" placeholder="رقم الهاتف (06...)" required>
                     </div>
+                    <input type="hidden" id="selected-variant" name="variant" value="">
+                    
                     <button type="submit" class="submit-btn">
                         <span>تأكيد الطلب الآن</span>
                         <span>&#8592;</span>
@@ -536,39 +524,85 @@
             },
             'batteries': {
                 title: "بطاريات صناعية قابلة للشحن",
-                price: "149 DH",
+                price: "149 DH", 
                 oldPrice: "199 DH",
-                desc: "بطاريات ليثيوم عالية الجودة تدوم طويلاً (قطعتين).",
+                desc: "بطاريات ليثيوم عالية الجودة تدوم طويلاً.",
                 fullDesc: "بطاريات ليثيوم أيون قابلة للشحن، مصممة خصيصاً للأجهزة التي تستهلك طاقة عالية مثل الكاميرات الشمسية. عمر افتراضي طويل وسرعة شحن عالية.",
                 images: [
-                    "img/Rechargeable-batteries.png",
-                    "img/OFFER-1.jpg",
-                    "img/OFFER-2.jpg"
+                    "img/OFFER-1.jpg", /* Default to 2 pieces image */
+                    "img/OFFER-2.jpg",
+                    "img/Rechargeable-batteries.png"
                 ],
                 specs: {
                     "النوع": "Lithium Ion",
                     "السعة": "High Capacity",
-                    "العدد": "2 Pieces / 4 Pieces",
+                    "العدد": "اختياري (2 أو 4 قطع)",
                     "التوافق": "Universal"
-                }
+                },
+                /* NEW: OFFERS CONFIGURATION */
+                offers: [
+                    { title: "2 قطع (2 Pieces)", price: "149 DH", oldPrice: "199 DH", img: "img/OFFER-1.jpg" },
+                    { title: "4 قطع (4 Pieces)", price: "249 DH", oldPrice: "350 DH", img: "img/OFFER-2.jpg" }
+                ]
             }
         };
 
         // --- 2. INIT PAGE ---
         const params = new URLSearchParams(window.location.search);
         let pid = params.get('id') || 1; // Default to 1 if empty
-        const product = products[pid];
+        let product = products[pid];
+
+        // Helper to update displayed info
+        function updateDisplay(price, oldPrice, imgSrc) {
+            document.getElementById('p-price').innerText = price;
+            document.getElementById('m-price').innerText = price;
+            document.getElementById('p-old-price').innerText = oldPrice;
+            document.getElementById('main-img').src = imgSrc;
+        }
 
         if(product) {
-            // Text Content
+            // Basic Text Content
             document.title = product.title + " - Prumysl";
             document.getElementById('bread-title').innerText = product.title;
             document.getElementById('p-title').innerText = product.title;
-            document.getElementById('p-price').innerText = product.price;
-            document.getElementById('m-price').innerText = product.price;
-            document.getElementById('p-old-price').innerText = product.oldPrice;
             document.getElementById('p-desc').innerText = product.desc;
             document.getElementById('full-desc-text').innerText = product.fullDesc;
+
+            // Initial Price & Image (Default)
+            updateDisplay(product.price, product.oldPrice, product.images[0]);
+
+            // --- OFFERS LOGIC (NEW) ---
+            const offersContainer = document.getElementById('offers-container');
+            if (product.offers) {
+                offersContainer.style.display = 'grid'; // Show container
+                
+                product.offers.forEach((offer, index) => {
+                    const div = document.createElement('div');
+                    div.className = `offer-option ${index === 0 ? 'selected' : ''}`;
+                    div.innerHTML = `
+                        <span class="offer-title">${offer.title}</span>
+                        <span class="offer-price">${offer.price}</span>
+                    `;
+                    div.onclick = () => {
+                        // 1. Update visual selection
+                        document.querySelectorAll('.offer-option').forEach(el => el.classList.remove('selected'));
+                        div.classList.add('selected');
+                        
+                        // 2. Update product details (Price & Image)
+                        updateDisplay(offer.price, offer.oldPrice, offer.img);
+                        
+                        // 3. Update hidden input for order
+                        document.getElementById('selected-variant').value = offer.title;
+                    };
+                    offersContainer.appendChild(div);
+                    
+                    // Set initial variant value
+                    if(index === 0) document.getElementById('selected-variant').value = offer.title;
+                });
+            } else {
+                // If no offers, ensure standard price is set
+                updateDisplay(product.price, product.oldPrice, product.images[0]);
+            }
 
             // --- WhatsApp Links ---
             const phone = "212600000000"; 
@@ -578,18 +612,16 @@
             document.getElementById('wa-btn-desktop').href = waLink;
             document.getElementById('wa-btn-mobile').href = waLink;
 
-            // Gallery
-            const mainImg = document.getElementById('main-img');
+            // Gallery (Thumbnails)
             const thumbsCont = document.getElementById('thumbs-container');
-            
             if(product.images.length > 0) {
-                mainImg.src = product.images[0];
                 product.images.forEach((src, idx) => {
                     let img = document.createElement('img');
                     img.src = src;
                     img.className = idx === 0 ? 'thumb active' : 'thumb';
                     img.onclick = () => {
-                        mainImg.src = src;
+                        // Only change image if NOT in offers mode, or just allow manual override
+                        document.getElementById('main-img').src = src;
                         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
                         img.classList.add('active');
                     };
@@ -609,11 +641,13 @@
             let count = 0;
             for (const [key, p] of Object.entries(products)) {
                 if (key != pid && count < 3) {
+                    // Use first image or offer image for related card
+                    let img = p.offers ? p.offers[0].img : p.images[0];
                     let card = `
                         <div class="r-card">
                             <a href="product.html?id=${key}">
                                 <div class="r-img-wrap">
-                                    <img src="${p.images[0]}" class="r-img">
+                                    <img src="${img}" class="r-img">
                                 </div>
                                 <div class="r-body">
                                     <div class="r-title">${p.title}</div>
@@ -639,7 +673,9 @@
         // --- 4. ORDER LOGIC ---
         function submitOrder(e) {
             e.preventDefault();
-            alert("شكراً لك! تم استلام طلبك. سنتصل بك قريباً للتأكيد.");
+            const variant = document.getElementById('selected-variant').value;
+            const msg = variant ? `شكراً لك! تم استلام طلبك (${variant}).` : "شكراً لك! تم استلام طلبك.";
+            alert(msg + " سنتصل بك قريباً للتأكيد.");
         }
 
         // --- 5. NEW: COUNTDOWN TIMER ---
@@ -689,7 +725,8 @@
                 // Update Content
                 cityEl.innerText = randomCity;
                 prodEl.innerText = randomProduct.title;
-                imgEl.src = randomProduct.images[0]; // Use first image of that product
+                // Use offer image if available
+                imgEl.src = randomProduct.offers ? randomProduct.offers[0].img : randomProduct.images[0];
 
                 // Show Popup
                 popup.classList.add('show');
