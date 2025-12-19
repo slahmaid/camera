@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تفاصيل المنتج - Prumysl</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -18,237 +18,239 @@
             --whatsapp: #25D366;
             --urgent-bg: #ffeaea;
             --urgent-text: #d9534f;
+            --header-height: 60px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #fcfcfc; color: var(--text); overflow-x: hidden; padding-bottom: 80px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background-color: #fcfcfc; 
+            color: var(--text); 
+            overflow-x: hidden; 
+            padding-bottom: 100px; /* Space for mobile sticky bar */
+        }
+        
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
         /* --- HEADER --- */
         .floating-header {
-            position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 0 30px; 
+            position: fixed; top: 0; left: 0; right: 0; 
+            height: var(--header-height); 
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px); z-index: 1000; 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 0 20px; 
             border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        .back-btn { font-weight: 700; font-size: 1rem; color: var(--dark); display: flex; align-items: center; gap: 5px; }
-        .back-btn:hover { color: var(--primary); }
+        .logo { font-weight: 900; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); }
+        .back-btn { font-weight: 700; font-size: 0.9rem; color: var(--dark); display: flex; align-items: center; gap: 5px; }
+        .back-btn span { display: none; } /* Hide text on small mobiles if needed, show via media query */
+        @media (min-width: 400px) { .back-btn span { display: inline; } }
 
         /* --- BREADCRUMBS --- */
         .breadcrumbs {
-            max-width: 1200px; margin: 100px auto 20px; padding: 0 20px;
-            font-size: 0.9rem; color: #888;
+            max-width: 1200px; margin: calc(var(--header-height) + 20px) auto 20px; padding: 0 20px;
+            font-size: 0.85rem; color: #888;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .breadcrumbs span { color: var(--dark); font-weight: 600; }
 
         /* --- MAIN LAYOUT --- */
         .product-container {
-            max-width: 1200px; margin: 0 auto 60px; padding: 0 20px;
-            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: start;
+            max-width: 1200px; margin: 0 auto 40px; padding: 0 20px;
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: start;
         }
 
-        /* --- LEFT COLUMN: GALLERY --- */
+        /* --- GALLERY SECTION (Mobile Optimized) --- */
         .product-gallery { position: relative; }
+        
         .main-img-wrap {
-            width: 100%; height: 500px; border-radius: 10px; overflow: hidden;
+            width: 100%; height: 400px; /* Desktop default */
+            border-radius: 12px; overflow: hidden;
             border: 1px solid #eee; margin-bottom: 15px; position: relative;
-            background: #fff; /* Updated to white to match product shots */
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
         }
         .main-img {
-            width: 100%; height: 100%; object-fit: contain; /* Changed to contain so no part of camera is cut off */
-            transition: transform 0.5s ease;
+            max-width: 100%; max-height: 100%; width: auto; height: auto;
+            object-fit: contain; transition: transform 0.5s ease;
         }
-        .main-img-wrap:hover .main-img { transform: scale(1.1); }
         
-        .thumbnails { display: flex; gap: 10px; }
+        /* Mobile Horizontal Scroll Thumbs */
+        .thumbnails { 
+            display: flex; gap: 10px; 
+            overflow-x: auto; padding-bottom: 5px; /* Scrollbar space */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Smooth scroll iOS */
+        }
+        .thumbnails::-webkit-scrollbar { height: 4px; }
+        .thumbnails::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+        
         .thumb {
-            width: 100px; height: 100px; object-fit: contain; border-radius: 8px; cursor: pointer;
+            width: 80px; height: 80px; flex-shrink: 0;
+            object-fit: contain; border-radius: 8px; cursor: pointer;
             border: 2px solid #eee; opacity: 0.7; transition: 0.3s; background: #fff;
         }
         .thumb:hover, .thumb.active { border-color: var(--primary); opacity: 1; }
 
-        /* --- RIGHT COLUMN: INFO & FORM --- */
-        .product-info { padding-top: 10px; }
-        .product-category { color: var(--primary); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .product-title { font-size: 2.2rem; font-weight: 900; margin: 5px 0 10px; line-height: 1.2; color: var(--dark); }
+        /* --- PRODUCT INFO --- */
+        .product-info { padding-top: 5px; }
+        .product-category { color: var(--primary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .product-title { font-size: 1.8rem; font-weight: 900; margin: 5px 0 10px; line-height: 1.3; color: var(--dark); }
         
-        /* Review Stars */
-        .reviews-summary { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #666; }
-        .stars { color: #ffc107; letter-spacing: 2px; }
+        .reviews-summary { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 0.85rem; color: #666; }
+        .stars { color: #ffc107; letter-spacing: 1px; }
 
         /* Price */
-        .price-box { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .price-box { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .current-price { font-size: 2rem; font-weight: 900; color: var(--dark); }
-        .old-price { text-decoration: line-through; color: #999; font-size: 1.3rem; }
-        .discount-tag { background: #ffeaea; color: #d9534f; padding: 3px 10px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 1.2rem; }
+        .discount-tag { 
+            background: #ffeaea; color: #d9534f; padding: 4px 10px; 
+            border-radius: 6px; font-weight: 700; font-size: 0.8rem; 
+            display: inline-block;
+        }
 
-        /* --- COUNTDOWN TIMER --- */
+        /* Countdown */
         .timer-box {
             background-color: var(--urgent-bg); color: var(--urgent-text);
-            padding: 12px 15px; border-radius: 8px; margin-bottom: 25px;
-            font-weight: 700; display: flex; align-items: center; gap: 10px;
-            border: 1px solid #ffcccc; animation: pulse 2s infinite;
+            padding: 12px; border-radius: 8px; margin-bottom: 20px;
+            font-weight: 700; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+            border: 1px solid #ffcccc;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(217, 83, 79, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0); }
-        }
-        .timer-icon { font-size: 1.2rem; }
-        .timer-text { flex-grow: 1; }
-        .countdown-digits { font-family: monospace; font-size: 1.2rem; font-weight: 800; }
+        .countdown-digits { font-family: monospace; font-size: 1.1rem; font-weight: 800; background: rgba(255,255,255,0.5); padding: 2px 6px; border-radius: 4px; }
 
-        /* Social Proof & Stock */
-        .meta-info { margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #eee; }
-        .stock-status { color: var(--success); font-weight: 700; display: block; margin-bottom: 5px; }
-        .view-count { font-size: 0.9rem; color: #555; display: flex; align-items: center; gap: 5px; }
-        
-        .product-short-desc { line-height: 1.7; color: #555; margin-bottom: 30px; font-size: 1.05rem; }
+        /* Description */
+        .product-short-desc { line-height: 1.6; color: #555; margin-bottom: 25px; font-size: 1rem; }
 
-        /* STICKY ORDER CARD */
+        /* --- ORDER CARD --- */
         .order-card {
-            background: white; padding: 25px; border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 2px solid var(--primary);
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 2px solid var(--primary);
+            scroll-margin-top: 80px; /* IMPORTANT: Prevents header from covering form */
         }
-        .order-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed #ddd; }
-        .order-header h4 { font-weight: 800; color: var(--dark); margin-bottom: 5px; }
+        .order-header { text-align: center; margin-bottom: 20px; border-bottom: 1px dashed #ddd; padding-bottom: 15px; }
+        .order-header h4 { font-weight: 800; color: var(--dark); margin-bottom: 5px; font-size: 1.1rem; }
         
-        .form-group { margin-bottom: 15px; position: relative; }
+        .form-group { margin-bottom: 15px; }
         .form-input {
-            width: 100%; padding: 14px 15px; border: 1px solid #ddd; border-radius: 6px;
-            font-family: inherit; font-size: 1rem; transition: 0.3s; background: #fcfcfc;
+            width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px;
+            font-family: inherit; font-size: 16px; /* IMPORTANT: Prevents iOS Zoom */
+            background: #fcfcfc; transition: 0.3s;
         }
-        .form-input:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 3px rgba(230, 184, 0, 0.1); }
+        .form-input:focus { border-color: var(--primary); background: #fff; outline: none; }
         
         .submit-btn {
             width: 100%; background: var(--dark); color: white; padding: 16px;
-            font-size: 1.1rem; font-weight: 700; border: none; border-radius: 6px;
+            font-size: 1.1rem; font-weight: 700; border: none; border-radius: 8px;
             cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
-        .submit-btn:hover { background: var(--primary); color: #000; transform: translateY(-2px); }
+        .submit-btn:active { transform: scale(0.98); }
 
-        /* Desktop WhatsApp Button */
-        .wa-order-btn {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            width: 100%; padding: 12px; margin-top: 15px;
-            background-color: #fcfcfc; color: var(--whatsapp);
-            border: 2px solid var(--whatsapp); border-radius: 6px;
-            font-weight: 700; cursor: pointer; transition: 0.3s; font-family: inherit;
-        }
-        .wa-order-btn:hover { background-color: var(--whatsapp); color: white; }
-        .wa-order-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        /* Trust Icons */
+        .trust-icons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; text-align: center; }
+        .t-icon { font-size: 0.75rem; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 
-        .trust-icons {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; text-align: center;
-        }
-        .t-icon { font-size: 0.8rem; color: #666; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .t-icon svg { width: 24px; height: 24px; fill: #555; }
-
-        /* --- TABS SECTION --- */
-        .tabs-container { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; }
-        .tabs-header { display: flex; border-bottom: 2px solid #eee; margin-bottom: 30px; }
-        .tab-btn {
-            padding: 15px 30px; background: none; border: none; font-family: inherit;
-            font-size: 1.1rem; font-weight: 700; color: #888; cursor: pointer;
-            border-bottom: 3px solid transparent; transition: 0.3s;
-        }
-        .tab-btn.active { color: var(--dark); border-bottom-color: var(--primary); }
-        
-        .tab-content { display: none; line-height: 1.8; color: #555; animation: fadeIn 0.4s; }
-        .tab-content.active { display: block; }
-
-        /* Specs Table */
-        .specs-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .specs-table th, .specs-table td { padding: 15px; border-bottom: 1px solid #eee; text-align: right; }
-        .specs-table th { width: 30%; background: #f9f9f9; font-weight: 700; color: var(--dark); }
-
-        /* --- RELATED PRODUCTS --- */
-        .related-section { background: #f4f4f4; padding: 60px 20px; }
-        .related-title { text-align: center; font-size: 1.8rem; font-weight: 900; margin-bottom: 40px; }
-        .related-grid { 
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; 
-        }
-        .r-card { background: white; border-radius: 8px; overflow: hidden; transition: 0.3s; }
-        .r-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .r-img { width: 100%; height: 180px; object-fit: contain; background: #fff; }
-        .r-body { padding: 15px; text-align: center; }
-        .r-title { font-weight: 700; font-size: 1rem; margin-bottom: 5px; color: var(--dark); }
-        .r-price { color: var(--primary); font-weight: 800; }
-
-        /* --- MOBILE FOOTER & BUTTONS --- */
+        /* --- MOBILE STICKY BAR --- */
         .mobile-sticky-bar {
-            display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white;
-            padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 999;
-            justify-content: space-between; align-items: center; gap: 10px;
+            display: none; /* Hidden on Desktop */
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background: white; padding: 12px 15px; 
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1); z-index: 1000;
+            justify-content: space-between; align-items: center; gap: 15px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom)); /* iPhone X fix */
         }
-        .m-price { font-size: 1.2rem; font-weight: 900; color: var(--dark); }
-        .m-btn { background: var(--primary); color: #000; padding: 12px 10px; border-radius: 5px; font-weight: 700; flex-grow: 2; text-align: center; }
+        .m-price-box { display: flex; flex-direction: column; }
+        .m-price-label { font-size: 0.75rem; color: #888; }
+        .m-price { font-size: 1.2rem; font-weight: 900; color: var(--dark); line-height: 1; }
+        
+        .m-actions { display: flex; gap: 10px; flex: 1; justify-content: flex-end; }
+        .m-btn { 
+            background: var(--primary); color: #000; padding: 12px 20px; 
+            border-radius: 8px; font-weight: 700; text-align: center; flex: 1;
+            font-size: 1rem; box-shadow: 0 4px 10px rgba(230, 184, 0, 0.3);
+        }
         .m-wa-btn { 
-            background: var(--whatsapp); color: white; padding: 12px; 
-            border-radius: 5px; display: flex; align-items: center; justify-content: center;
-            flex-grow: 0; width: 50px; transition: 0.2s;
+            background: #25D366; color: white; width: 48px; height: 48px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
-        .m-wa-btn:active { background: #1ebc57; }
         .m-wa-btn svg { width: 24px; height: 24px; fill: white; }
 
-        /* --- WHATSAPP FLOATING WIDGET --- */
-        .whatsapp-float {
-            position: fixed; bottom: 20px; left: 20px;
-            width: 60px; height: 60px;
-            background-color: var(--whatsapp); color: #FFF;
-            border-radius: 50%; text-align: center;
-            font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease; text-decoration: none;
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .product-container { grid-template-columns: 1fr; gap: 25px; padding: 0 15px; }
+            .main-img-wrap { height: 350px; }
+            
+            /* Typography Adjustments */
+            .product-title { font-size: 1.5rem; }
+            .current-price { font-size: 1.8rem; }
+            
+            /* Hide Desktop WA Button in form since we have Sticky Bar */
+            .wa-order-btn { display: none; } 
+            
+            /* Show Sticky Bar */
+            .mobile-sticky-bar { display: flex; }
+            
+            /* Adjust Popup Position */
+            .sales-popup { bottom: 90px; right: 10px; left: 10px; width: auto; max-width: none; }
+            .whatsapp-float { bottom: 90px; }
         }
-        .whatsapp-float:hover { transform: scale(1.1); background-color: #20b858; }
-        .whatsapp-icon { width: 35px; height: 35px; fill: white; }
-        .whatsapp-tooltip {
-            position: absolute; left: 70px; top: 50%; transform: translateY(-50%);
-            background: #333; color: white; padding: 6px 12px;
-            border-radius: 5px; font-size: 14px; font-weight: 700;
-            white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s;
-        }
-        .whatsapp-float:hover .whatsapp-tooltip { opacity: 1; left: 75px; }
 
-        /* --- FAKE NOTIFICATION POPUP --- */
+        /* --- TABS & RELATED --- */
+        .tabs-container { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; }
+        .tabs-header { display: flex; overflow-x: auto; border-bottom: 2px solid #eee; margin-bottom: 20px; white-space: nowrap; gap: 10px; padding-bottom: 5px; }
+        .tab-btn { padding: 10px 20px; font-size: 1rem; font-weight: 700; color: #888; border: none; background: none; border-bottom: 3px solid transparent; cursor: pointer; }
+        .tab-btn.active { color: var(--dark); border-bottom-color: var(--primary); }
+        .tab-content { display: none; line-height: 1.7; color: #555; font-size: 0.95rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s; }
+        
+        .specs-table { width: 100%; border-collapse: collapse; }
+        .specs-table th, .specs-table td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; font-size: 0.9rem; }
+        .specs-table th { width: 35%; background: #f9f9f9; font-weight: 700; }
+
+        .related-section { background: #f4f4f4; padding: 40px 20px; margin-bottom: 60px; }
+        .related-title { text-align: center; font-size: 1.5rem; font-weight: 900; margin-bottom: 30px; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; }
+        .r-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .r-img { width: 100%; height: 150px; object-fit: contain; background: #fff; padding: 10px; }
+        .r-body { padding: 10px; text-align: center; }
+        .r-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; color: var(--dark); height: 40px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .r-price { color: var(--primary); font-weight: 800; font-size: 1rem; }
+
+        /* Fake Popup */
         .sales-popup {
             position: fixed; bottom: 20px; right: 20px; z-index: 1500;
-            background: #fff; padding: 15px; border-radius: 10px;
+            background: #fff; padding: 12px; border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15); border-right: 4px solid var(--primary);
-            display: flex; align-items: center; gap: 12px;
-            max-width: 350px;
-            transform: translateY(150%); /* Hidden initially */
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 10px;
+            transform: translateY(150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .sales-popup.show { transform: translateY(0); }
-        .sales-popup img { width: 50px; height: 50px; border-radius: 6px; object-fit: contain; background:#eee; }
-        .sales-text { font-size: 0.9rem; line-height: 1.4; color: #333; }
-        .sales-text strong { display: block; color: var(--dark); font-weight: 800; }
-        .sales-time { font-size: 0.75rem; color: #888; }
-        .check-icon { color: var(--success); font-size: 1rem; margin-right: 5px; }
+        .sales-popup img { width: 45px; height: 45px; border-radius: 4px; object-fit: contain; background: #f4f4f4; }
+        .sales-text { font-size: 0.85rem; line-height: 1.3; }
 
-        @media (max-width: 900px) {
-            .product-container { grid-template-columns: 1fr; gap: 30px; }
-            .main-img-wrap { height: 350px; }
-            .related-grid { grid-template-columns: repeat(2, 1fr); }
-            .mobile-sticky-bar { display: flex; } 
-            body { padding-bottom: 90px; } 
-            .whatsapp-float { bottom: 90px; } 
-            .sales-popup { bottom: 90px; right: 10px; left: 10px; width: auto; max-width: none; }
+        /* WhatsApp Floating */
+        .whatsapp-float {
+            position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px;
+            background-color: var(--whatsapp); color: #FFF; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 2000;
         }
-        @media (min-width: 901px) {
-            .mobile-sticky-bar { display: none; }
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .whatsapp-icon { width: 30px; height: 30px; fill: white; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <header class="floating-header">
-        <a href="index.html" class="back-btn">&#8594; العودة للمتجر</a>
+        <a href="index.html" class="back-btn">&#8594; <span>العودة للمتجر</span></a>
         <div class="logo">Prumysl</div>
-        <div style="width: 80px;"></div> 
+        <div style="width: 20px;"></div> 
     </header>
 
     <div class="breadcrumbs">
@@ -262,7 +264,7 @@
                 <img id="main-img" src="" alt="Product" class="main-img">
             </div>
             <div class="thumbnails" id="thumbs-container">
-            </div>
+                </div>
         </div>
 
         <div class="product-info">
@@ -281,14 +283,8 @@
             </div>
 
             <div class="timer-box">
-                <span class="timer-icon">⏳</span>
-                <span class="timer-text">عرض محدود! ينتهي الطلب خلال:</span>
+                <span>🔥 عرض محدود! ينتهي خلال:</span>
                 <span class="countdown-digits" id="countdown">02:00:00</span>
-            </div>
-
-            <div class="meta-info">
-                <span class="stock-status">✔ متوفر في المخزون - شحن فوري</span>
-                <span class="view-count">🔥 <strong>24 شخصاً</strong> يشاهدون هذا المنتج حالياً</span>
             </div>
 
             <p id="p-desc" class="product-short-desc">...</p>
@@ -296,7 +292,7 @@
             <div class="order-card" id="orderForm">
                 <div class="order-header">
                     <h4>اطلب الآن والدفع عند الاستلام</h4>
-                    <p style="font-size:0.85rem; color:#777;">التوصيل مجاني لجميع المدن 🇲🇦</p>
+                    <p style="font-size:0.8rem; color:#777;">التوصيل مجاني لجميع المدن 🇲🇦</p>
                 </div>
                 <form onsubmit="submitOrder(event)">
                     <div class="form-group">
@@ -314,24 +310,10 @@
                     </button>
                 </form>
 
-                <a href="#" id="wa-btn-desktop" target="_blank" class="wa-order-btn">
-                    <svg viewBox="0 0 32 32"><path d="M16 2C8.269 2 2 8.269 2 16c0 2.485.643 4.821 1.764 6.845L2.1 29.9l7.247-1.62C11.306 29.357 13.585 30 16 30c7.731 0 14-6.269 14-14S23.731 2 16 2zm0 25.867c-2.14 0-4.162-.57-5.918-1.564l-.424-.24-4.398.983 1.01-4.29-.264-.442A11.82 11.82 0 014.133 16c0-6.543 5.324-11.867 11.867-11.867S27.867 9.457 27.867 16 22.543 27.867 16 27.867zm6.524-8.875c-.356-.178-2.112-1.04-2.438-1.16-.326-.118-.564-.178-.802.179-.237.356-.92 1.159-1.128 1.396-.208.238-.416.267-.772.089-.356-.178-1.504-.555-2.865-1.769-1.059-.945-1.774-2.112-1.982-2.468-.208-.356-.022-.549.156-.727.16-.159.356-.416.535-.624.178-.208.237-.356.356-.594.119-.238.059-.446-.03-.624-.089-.178-.802-1.933-1.098-2.646-.29-.696-.584-.6-.802-.612-.207-.012-.445-.012-.683-.012-.237 0-.623.089-.95.446-.326.356-1.247 1.218-1.247 2.97 0 1.753 1.277 3.447 1.455 3.685.178.238 2.513 3.838 6.088 5.381.85.367 1.513.586 2.031.751.854.272 1.632.234 2.245.142.684-.103 2.112-.862 2.408-1.694.297-.832.297-1.545.208-1.694-.089-.149-.327-.238-.683-.416z"/></svg>
-                    اطلب عبر الواتساب
-                </a>
-                
                 <div class="trust-icons">
-                    <div class="t-icon">
-                        <span style="font-size:1.2rem">🛡️</span>
-                        <span>ضمان سنة</span>
-                    </div>
-                    <div class="t-icon">
-                        <span style="font-size:1.2rem">🚚</span>
-                        <span>شحن مجاني</span>
-                    </div>
-                    <div class="t-icon">
-                        <span style="font-size:1.2rem">📞</span>
-                        <span>دعم فني</span>
-                    </div>
+                    <div class="t-icon"><span>🛡️</span><span>ضمان سنة</span></div>
+                    <div class="t-icon"><span>🚚</span><span>شحن مجاني</span></div>
+                    <div class="t-icon"><span>📞</span><span>دعم فني</span></div>
                 </div>
             </div>
         </div>
@@ -339,9 +321,9 @@
 
     <div class="tabs-container">
         <div class="tabs-header">
-            <button class="tab-btn active" onclick="switchTab('desc')">الوصف الكامل</button>
-            <button class="tab-btn" onclick="switchTab('specs')">المواصفات التقنية</button>
-            <button class="tab-btn" onclick="switchTab('shipping')">الشحن والضمان</button>
+            <button class="tab-btn active" onclick="switchTab('desc')">الوصف</button>
+            <button class="tab-btn" onclick="switchTab('specs')">المواصفات</button>
+            <button class="tab-btn" onclick="switchTab('shipping')">الشحن</button>
         </div>
 
         <div id="tab-desc" class="tab-content active">
@@ -350,29 +332,27 @@
 
         <div id="tab-specs" class="tab-content">
             <table class="specs-table">
-                <tbody id="specs-body">
-                </tbody>
+                <tbody id="specs-body"></tbody>
             </table>
         </div>
 
         <div id="tab-shipping" class="tab-content">
-            <p><strong>التوصيل:</strong> نقوم بالشحن عبر أمانة إكسبريس أو شركات التوصيل الخاصة إلى جميع المدن المغربية. مدة التوصيل 24-48 ساعة.</p>
-            <p style="margin-top:10px;"><strong>الضمان:</strong> جميع منتجاتنا تأتي مع ضمان شامل لمدة سنة (12 شهراً) يغطي أي عيوب تصنيع. في حالة وجود عطل، يتم استبدال المنتج فوراً.</p>
+            <p><strong>التوصيل:</strong> نقوم بالشحن عبر أمانة إكسبريس خلال 24-48 ساعة.</p>
+            <p><strong>الضمان:</strong> ضمان شامل لمدة سنة (12 شهراً).</p>
         </div>
     </div>
 
     <section class="related-section">
-        <h2 class="related-title">منتجات قد تعجبك أيضاً</h2>
-        <div class="related-grid" id="related-grid">
-        </div>
+        <h2 class="related-title">قد يعجبك أيضاً</h2>
+        <div class="related-grid" id="related-grid"></div>
     </section>
 
     <div class="mobile-sticky-bar">
-        <div>
-            <div style="font-size:0.8rem; color:#777;">السعر الإجمالي</div>
+        <div class="m-price-box">
+            <span class="m-price-label">السعر الإجمالي</span>
             <div id="m-price" class="m-price">...</div>
         </div>
-        <div style="display:flex; gap:10px; flex-grow:1; justify-content: flex-end;">
+        <div class="m-actions">
             <a href="#" id="wa-btn-mobile" target="_blank" class="m-wa-btn">
                 <svg viewBox="0 0 32 32"><path d="M16 2C8.269 2 2 8.269 2 16c0 2.485.643 4.821 1.764 6.845L2.1 29.9l7.247-1.62C11.306 29.357 13.585 30 16 30c7.731 0 14-6.269 14-14S23.731 2 16 2zm0 25.867c-2.14 0-4.162-.57-5.918-1.564l-.424-.24-4.398.983 1.01-4.29-.264-.442A11.82 11.82 0 014.133 16c0-6.543 5.324-11.867 11.867-11.867S27.867 9.457 27.867 16 22.543 27.867 16 27.867zm6.524-8.875c-.356-.178-2.112-1.04-2.438-1.16-.326-.118-.564-.178-.802.179-.237.356-.92 1.159-1.128 1.396-.208.238-.416.267-.772.089-.356-.178-1.504-.555-2.865-1.769-1.059-.945-1.774-2.112-1.982-2.468-.208-.356-.022-.549.156-.727.16-.159.356-.416.535-.624.178-.208.237-.356.356-.594.119-.238.059-.446-.03-.624-.089-.178-.802-1.933-1.098-2.646-.29-.696-.584-.6-.802-.612-.207-.012-.445-.012-.683-.012-.237 0-.623.089-.95.446-.326.356-1.247 1.218-1.247 2.97 0 1.753 1.277 3.447 1.455 3.685.178.238 2.513 3.838 6.088 5.381.85.367 1.513.586 2.031.751.854.272 1.632.234 2.245.142.684-.103 2.112-.862 2.408-1.694.297-.832.297-1.545.208-1.694-.089-.149-.327-.238-.683-.416z"/></svg>
             </a>
@@ -384,130 +364,93 @@
         <img id="popup-img" src="" alt="Sold Product">
         <div class="sales-text">
             <strong>شخص ما في <span id="popup-city">...</span></strong>
-            قام بشراء <span id="popup-product">...</span><br>
-            <span class="sales-time"><i class="check-icon">✔</i> منذ قليل</span>
+            اشترى <span id="popup-product">...</span>
         </div>
     </div>
 
     <a href="https://wa.me/212600000000" class="whatsapp-float" target="_blank">
-        <span class="whatsapp-tooltip">تواصل معنا</span>
         <svg viewBox="0 0 32 32" class="whatsapp-icon"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.475.642 4.85 1.863 6.963L2.3 29.7l6.9-1.808A13.926 13.926 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z"/></svg>
     </a>
 
     <script>
-        // --- 1. PRODUCT DATABASE WITH CORRECT PATHS ---
+        // --- 1. PRODUCT DATABASE ---
         const products = {
             1: {
                 title: "Prumysl Omni-Guard 360°",
                 price: "1200 DH",
                 oldPrice: "1500 DH",
-                desc: "كاميرا شمسية 4G ثلاثية العدسات PTZ أرفاديس – 15 ميغابكسيل و3 شاشات حيّة. مثالية للمراقبة الشاملة.",
-                fullDesc: "كاميرا مراقبة شمسية احترافية بثلاث عدسات PTZ مدمجة في جهاز واحد، كل عدسة تتحكم فيها من الهاتف، بدقّة 15 ميغابكسيل (3×5MP). تأتي مع بطارية ضخمة 8000mAh ولوحين شمسيين بقدرة إجمالية 16W لضمان العمل المستمر. تعمل بشريحة 4G لتعطيك مراقبة 360° بلا نقاط عمياء.",
+                desc: "كاميرا شمسية 4G ثلاثية العدسات PTZ أرفاديس – 15 ميغابكسيل و3 شاشات حيّة.",
+                fullDesc: "كاميرا مراقبة شمسية احترافية بثلاث عدسات PTZ مدمجة في جهاز واحد، كل عدسة تتحكم فيها من الهاتف، بدقّة 15 ميغابكسيل. تعمل بشريحة 4G لتعطيك مراقبة 360° بلا نقاط عمياء.",
                 images: [
                     "img/Prumysl Omni-Guard 360°/Prumysl Omni-Guard 360°-main.jpg",
                     "img/Prumysl Omni-Guard 360°/Prumysl Omni-Guard 360°-thumb-2.jpg"
                 ],
-                specs: {
-                    "الدقة": "15 ميغابكسل (3 عدسات)",
-                    "الاتصال": "4G / LTE (شريحة)",
-                    "البطارية": "8000 mAh",
-                    "الطاقة الشمسية": "16W (لوحين)",
-                    "الرؤية الليلية": "نعم (ملونة)",
-                    "التخزين": "SD Card / Cloud"
-                }
+                specs: { "الدقة": "15MP (3 Lenses)", "الاتصال": "4G Sim", "البطارية": "8000 mAh", "الطاقة": "16W Solar" }
             },
             2: {
                 title: "Prumysl Vision 6K Pro",
                 price: "1100 DH",
                 oldPrice: "1350 DH",
-                desc: "كاميرا شمسية ثلاثية العدسات 4G، دقة 6K وزووم رقمي 10X. رؤية فائقة الوضوح.",
-                fullDesc: "كاميرا احترافية بـ3 عدسات و3 شاشات في التطبيق. دقة 15 ميغابكسيل 6K مع زووم رقمي 10X لرؤية التفاصيل البعيدة. بطارية 8000mAh ولوحين شمسيين 16W. تغطية 360 درجة مثالية للضيعات الكبيرة.",
+                desc: "كاميرا شمسية ثلاثية العدسات 4G، دقة 6K وزووم رقمي 10X.",
+                fullDesc: "كاميرا احترافية بـ3 عدسات و3 شاشات في التطبيق. دقة 15 ميغابكسيل 6K مع زووم رقمي 10X لرؤية التفاصيل البعيدة.",
                 images: [
                     "img/Prumysl Vision 6K Pro/Prumysl Vision 6K Pro-main.jpg",
                     "img/Prumysl Vision 6K Pro/Prumysl Vision 6K Pro-thumb-1.jpg",
                     "img/Prumysl Vision 6K Pro/Prumysl Vision 6K Pro-thumb-2.jpg"
                 ],
-                specs: {
-                    "الدقة": "15 MP (6K)",
-                    "التقريب (Zoom)": "10X Digital",
-                    "البطارية": "8000 mAh",
-                    "الاتصال": "4G LTE",
-                    "مقاومة الماء": "IP66"
-                }
+                specs: { "الدقة": "6K (15MP)", "الزووم": "10X Digital", "البطارية": "8000 mAh", "الاتصال": "4G LTE" }
             },
             3: {
                 title: "Prumysl Euro-Shield",
                 price: "899 DH",
                 oldPrice: "1100 DH",
-                desc: "نسخة أوروبية متطورة، لوحين للطاقة وبطارية مدمجة. تصميم أنيق للفلل.",
-                fullDesc: "كاميرا مراقبة شمسية متطورة بلوحين للطاقة وبطارية مدمجة، مصممة خصيصا لأصحاب الفلل، الضيعات، المنازل والمشاريع اللي كيبغيو راحة البال 24/24 في أي مكان في المغرب. جودة أوروبية عالية.",
+                desc: "نسخة أوروبية متطورة، لوحين للطاقة وبطارية مدمجة.",
+                fullDesc: "كاميرا مراقبة شمسية متطورة بلوحين للطاقة وبطارية مدمجة، مصممة خصيصا لأصحاب الفلل والضيعات.",
                 images: [
                     "img/Prumysl Euro-Shield/Prumysl Euro-Shield-main.jpg",
                     "img/Prumysl Euro-Shield/Prumysl Euro-Shield-thumb-1.jpg",
                     "img/Prumysl Euro-Shield/Prumysl Euro-Shield-thumb-2.jpg"
                 ],
-                specs: {
-                    "الدقة": "Full HD",
-                    "الألواح الشمسية": "Dual Panel (مزدوج)",
-                    "الاتصال": "4G",
-                    "البطارية": "مدمجة طويلة الأمد",
-                    "الاستشعار": "PIR Motion Sensor"
-                }
+                specs: { "الدقة": "Full HD", "الطاقة": "Dual Panel", "الاتصال": "4G", "البطارية": "Long Life" }
             },
             4: {
                 title: "Prumysl Duo 18W",
                 price: "699 DH",
                 oldPrice: "850 DH",
-                desc: "كاميرا ثنائية العدسة منخفضة الاستهلاك، 15MP ولوحين 18W. متوفرة WiFi/4G.",
-                fullDesc: "كاميرا مراقبة ذكية منخفضة الاستهلاك بالطاقة، بدقّة 10 ميغابكسيل، بطارية 8000mAh، لوحين شمسيين بقدرة إجمالية 18W، وعدستين (ثابتة + PTZ) بجوج شاشات في التطبيق. تتوفر بنسخة واي فاي أو 4G.",
+                desc: "كاميرا ثنائية العدسة منخفضة الاستهلاك، 15MP ولوحين 18W.",
+                fullDesc: "كاميرا مراقبة ذكية منخفضة الاستهلاك بالطاقة، بدقّة 10 ميغابكسيل، بطارية 8000mAh، وعدستين (ثابتة + PTZ).",
                 images: [
                     "img/Prumysl Duo 18W/Prumysl Duo 18W-main.jpg",
                     "img/Prumysl Duo 18W/Prumysl Duo 18W-thumb-1.jpg",
                     "img/Prumysl Duo 18W/Prumysl Duo 18W-thumb-2.jpg"
                 ],
-                specs: {
-                    "العدسات": "Dual Lens (Fixe + PTZ)",
-                    "الطاقة": "18W Solar Panel",
-                    "البطارية": "8000 mAh",
-                    "الخيارات": "WiFi or 4G"
-                }
+                specs: { "العدسات": "Dual Lens", "الطاقة": "18W Solar", "البطارية": "8000 mAh", "الخيار": "WiFi/4G" }
             },
             5: {
                 title: "Prumysl Falcon 36X",
                 price: "2800 DH",
                 oldPrice: "3400 DH",
-                desc: "الوحش الصناعي: 24 ميغابكسل، زووم بصري 36X وبطارية 12000mAh.",
-                fullDesc: "كاميرا مراقبة شمسية متطورة بعدستين، دقّة 24 ميغابكسيل، زووم بصري حقيقي 36X يقرب المسافات البعيدة بوضوح تام. بطارية ضخمة 12000mAh لعمل متواصل. الهيكل معدني بالكامل ومقاوم لأقسى الظروف.",
+                desc: "الوحش الصناعي: 24MP، زووم بصري 36X وبطارية 12000mAh.",
+                fullDesc: "كاميرا مراقبة شمسية متطورة بعدستين، دقّة 24 ميغابكسيل، زووم بصري حقيقي 36X يقرب المسافات البعيدة بوضوح تام.",
                 images: [
                     "img/Prumysl Falcon 36X/Prumysl Falcon 36X-main.jpg",
                     "img/Prumysl Falcon 36X/Prumysl Falcon 36X-thumb-1.jpg",
                     "img/Prumysl Falcon 36X/Prumysl Falcon 36X-thumb-2.jpg"
                 ],
-                specs: {
-                    "الدقة": "24 Megapixel Ultra HD",
-                    "الزووم": "36X Optical Zoom",
-                    "البطارية": "12000 mAh",
-                    "المواد": "Metal Body",
-                    "الاتصال": "4G + WiFi Support"
-                }
+                specs: { "الدقة": "24MP Ultra HD", "الزووم": "36X Optical", "البطارية": "12000 mAh", "الهيكل": "Metal" }
             },
             'batteries': {
                 title: "بطاريات صناعية قابلة للشحن",
                 price: "149 DH",
                 oldPrice: "199 DH",
                 desc: "بطاريات ليثيوم عالية الجودة تدوم طويلاً (قطعتين).",
-                fullDesc: "بطاريات ليثيوم أيون قابلة للشحن، مصممة خصيصاً للأجهزة التي تستهلك طاقة عالية مثل الكاميرات الشمسية. عمر افتراضي طويل وسرعة شحن عالية.",
+                fullDesc: "بطاريات ليثيوم أيون قابلة للشحن، مصممة خصيصاً للأجهزة التي تستهلك طاقة عالية مثل الكاميرات الشمسية.",
                 images: [
                     "img/OFFER-1.jpg",
                     "img/OFFER-2.jpg",
                     "img/Rechargeable-batteries.png"
                 ],
-                specs: {
-                    "النوع": "Lithium Ion",
-                    "السعة": "High Capacity",
-                    "العدد": "2 Pieces / 4 Pieces",
-                    "التوافق": "Universal"
-                }
+                specs: { "النوع": "Lithium Ion", "السعة": "High Capacity", "العدد": "2/4 Pcs", "التوافق": "Universal" }
             }
         };
 
@@ -517,8 +460,7 @@
         const product = products[pid];
 
         if(product) {
-            // Text Content
-            document.title = product.title + " - Prumysl";
+            document.title = product.title;
             document.getElementById('bread-title').innerText = product.title;
             document.getElementById('p-title').innerText = product.title;
             document.getElementById('p-price').innerText = product.price;
@@ -527,12 +469,7 @@
             document.getElementById('p-desc').innerText = product.desc;
             document.getElementById('full-desc-text').innerText = product.fullDesc;
 
-            // --- WhatsApp Links ---
-            const phone = "212600000000"; 
-            const msg = `Hello, I am interested in ${product.title}`;
-            const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-
-            document.getElementById('wa-btn-desktop').href = waLink;
+            const waLink = `https://wa.me/212600000000?text=${encodeURIComponent('Hello, I want: ' + product.title)}`;
             document.getElementById('wa-btn-mobile').href = waLink;
 
             // Gallery
@@ -554,19 +491,18 @@
                 });
             }
 
-            // Specs Table
+            // Specs
             const specsBody = document.getElementById('specs-body');
             for (const [key, value] of Object.entries(product.specs)) {
-                let row = `<tr><th>${key}</th><td>${value}</td></tr>`;
-                specsBody.innerHTML += row;
+                specsBody.innerHTML += `<tr><th>${key}</th><td>${value}</td></tr>`;
             }
 
-            // Related Products
+            // Related
             const relatedGrid = document.getElementById('related-grid');
             let count = 0;
             for (const [key, p] of Object.entries(products)) {
-                if (key !== pid && count < 3) {
-                    let card = `
+                if (key !== pid && count < 4) { // Show 4 on mobile grid
+                    relatedGrid.innerHTML += `
                         <div class="r-card">
                             <a href="product.html?id=${key}">
                                 <img src="${p.images[0]}" class="r-img">
@@ -575,15 +511,13 @@
                                     <div class="r-price">${p.price}</div>
                                 </div>
                             </a>
-                        </div>
-                    `;
-                    relatedGrid.innerHTML += card;
+                        </div>`;
                     count++;
                 }
             }
         }
 
-        // --- 3. TAB LOGIC ---
+        // --- 3. UTILS ---
         function switchTab(tabName) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
@@ -591,61 +525,27 @@
             document.getElementById('tab-' + tabName).classList.add('active');
         }
 
-        // --- 4. ORDER LOGIC ---
         function submitOrder(e) {
             e.preventDefault();
-            alert("شكراً لك! تم استلام طلبك. سنتصل بك قريباً للتأكيد.");
+            alert("شكراً لك! تم استلام طلبك بنجاح.");
         }
 
-        // --- 5. COUNTDOWN TIMER ---
-        function startCountdown() {
-            let timeInSeconds = 2 * 60 * 60; 
-            const timerElement = document.getElementById('countdown');
+        // Countdown & Popup
+        setInterval(() => {
+            const d = new Date();
+            const h = 23 - d.getHours();
+            const m = 59 - d.getMinutes();
+            document.getElementById('countdown').innerText = `${h}h : ${m}m`;
+        }, 1000);
 
-            function updateTimer() {
-                const hours = Math.floor(timeInSeconds / 3600);
-                const minutes = Math.floor((timeInSeconds % 3600) / 60);
-                const seconds = timeInSeconds % 60;
-                timerElement.textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                if (timeInSeconds > 0) {
-                    timeInSeconds--;
-                } else {
-                    timeInSeconds = 2 * 60 * 60;
-                }
-            }
-            setInterval(updateTimer, 1000);
-            updateTimer(); 
-        }
-
-        // --- 6. FAKE SOCIAL PROOF NOTIFICATION ---
-        function startSocialProof() {
-            const cities = ["الدار البيضاء", "الرباط", "مراكش", "طنجة", "فاس", "أكادير", "مكناس", "وجدة"];
+        setTimeout(() => {
             const popup = document.getElementById('sales-popup');
-            const cityEl = document.getElementById('popup-city');
-            const prodEl = document.getElementById('popup-product');
-            const imgEl = document.getElementById('popup-img');
-
-            const productKeys = Object.keys(products);
-
-            setInterval(() => {
-                const randomCity = cities[Math.floor(Math.random() * cities.length)];
-                const randomKey = productKeys[Math.floor(Math.random() * productKeys.length)];
-                const randomProduct = products[randomKey];
-
-                cityEl.innerText = randomCity;
-                prodEl.innerText = randomProduct.title;
-                imgEl.src = randomProduct.images[0]; 
-
-                popup.classList.add('show');
-                setTimeout(() => { popup.classList.remove('show'); }, 5000);
-            }, 20000); 
-        }
-
-        window.onload = function() {
-            startCountdown();
-            startSocialProof();
-        };
+            document.getElementById('popup-city').innerText = "الدار البيضاء";
+            document.getElementById('popup-product').innerText = product ? product.title : "كاميرا شمسية";
+            if(product) document.getElementById('popup-img').src = product.images[0];
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4000);
+        }, 5000);
 
     </script>
 </body>
